@@ -13,16 +13,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "alignwise_query")
 public class Query {
 
-	@Id
-	private String queryId;
-	private String customerName;
-	private Long phoneNumber;
-	private String email;
-	private String queryText;
-	
+    @Id
+    private String queryId;
+    private String customerName;
+    private Long phoneNumber;
+    private String email;
+    private String queryText;
+
 }

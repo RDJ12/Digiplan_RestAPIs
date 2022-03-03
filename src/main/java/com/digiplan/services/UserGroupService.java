@@ -6,13 +6,13 @@ import com.digiplan.entities.UserGroup;
 
 public interface UserGroupService {
 
-	public UserGroup getUserGroup(String groupId);
+    UserGroup getUserGroup(String groupId);
 
-	public List<UserGroup> getAllUserGroups();
+    List<UserGroup> getAllUserGroups();
 
-	public UserGroup addUserGroup(UserGroup userGroupData);
+    UserGroup addUserGroup(UserGroup userGroupData);
 
-	public UserGroup updateUserGroup(String groupId, UserGroup userGroupData);
+    UserGroup updateUserGroup(String groupId, UserGroup userGroupData);
 
-	public String deleteUserGroup(String groupId);
+    String deleteUserGroup(String groupId);
 }

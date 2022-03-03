@@ -6,13 +6,13 @@ import com.digiplan.entities.Comment;
 
 public interface CommentService {
 
-	public Comment getComment(Integer id);
+    Comment getComment(Integer id);
 
-	public List<Comment> getAllComments();
+    List<Comment> getAllComments();
 
-	public Comment addComment(Comment commentData);
+    Comment addComment(Comment commentData);
 
-	public Comment updateComment(Integer id, Comment commentData);
+    Comment updateComment(Integer id, Comment commentData);
 
-	public String deleteComment(Integer id);
+    String deleteComment(Integer id);
 }

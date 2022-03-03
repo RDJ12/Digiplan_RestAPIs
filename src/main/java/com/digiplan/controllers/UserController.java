@@ -19,44 +19,44 @@ import com.digiplan.services.UserService;
 @RestController
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@GetMapping("/getUser/{id}")
-	public ResponseEntity<User> getUser(@PathVariable Integer id) {
-		User user = this.userService.getUser(id);
-		if (user != null)
-			return new ResponseEntity<User>(user, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+        User user = this.userService.getUser(id);
+        if (user != null)
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@GetMapping("/getAllUsers")
-	public List<User> getAllUsers() {
-		return this.userService.getAllUsers();
-	}
+    @GetMapping("/getAllUsers")
+    public List<User> getAllUsers() {
+        return this.userService.getAllUsers();
+    }
 
-	@PostMapping("/addUser")
-	public ResponseEntity<User> addUser(@RequestBody User userData) {
-		return new ResponseEntity<User>(this.userService.addUser(userData), HttpStatus.CREATED);
-	}
+    @PostMapping("/addUser")
+    public ResponseEntity<User> addUser(@RequestBody User userData) {
+        return new ResponseEntity<User>(this.userService.addUser(userData), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/updateUser/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userData) {
-		User user = this.userService.updateUser(id, userData);
-		if (user != null)
-			return new ResponseEntity<User>(user, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userData) {
+        User user = this.userService.updateUser(id, userData);
+        if (user != null)
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@DeleteMapping("/deleteUser/{id}")
-	public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
-		String status = this.userService.deleteUser(id);
-		if (status != null)
-			return new ResponseEntity<String>(status, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        String status = this.userService.deleteUser(id);
+        if (status != null)
+            return new ResponseEntity<String>(status, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

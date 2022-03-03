@@ -6,13 +6,13 @@ import com.digiplan.entities.Draft;
 
 public interface DraftService {
 
-	public Draft getDraft(Integer id);
+    Draft getDraft(Integer id);
 
-	public List<Draft> getAllDrafts();
+    List<Draft> getAllDrafts();
 
-	public Draft addDraft(Draft draftData);
+    Draft addDraft(Draft draftData);
 
-	public Draft updateDraft(Integer id, Draft draftData);
+    Draft updateDraft(Integer id, Draft draftData);
 
-	public String deleteDraft(Integer id);
+    String deleteDraft(Integer id);
 }

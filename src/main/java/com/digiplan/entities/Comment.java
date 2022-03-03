@@ -18,21 +18,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "comment")
 public class Comment {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "comment_id")
-	private Integer id;
-	@Column(name = "case_id")
-	private String caseId;
-	@Column(name = "user_name")
-	private String username;
-	private String stage;
-	private String comment;
-	private LocalDateTime date = LocalDateTime.now();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
+    private Integer id;
+    @Column(name = "case_id")
+    private String caseId;
+    @Column(name = "user_name")
+    private String username;
+    private String stage;
+    private String comment;
+    private LocalDateTime date = LocalDateTime.now();
 
 }

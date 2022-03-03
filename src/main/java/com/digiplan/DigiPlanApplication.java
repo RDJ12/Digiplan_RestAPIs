@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DigiplanApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DigiplanApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DigiplanApplication.class, args);
+    }
 
 }

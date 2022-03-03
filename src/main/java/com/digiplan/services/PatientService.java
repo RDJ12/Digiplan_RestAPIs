@@ -6,13 +6,13 @@ import com.digiplan.entities.Patient;
 
 public interface PatientService {
 
-	public Patient getPatient(String caseId);
+    Patient getPatient(String caseId);
 
-	public List<Patient> getAllPatients();
+    List<Patient> getAllPatients();
 
-	public Patient addPatient(Patient patientData);
+    Patient addPatient(Patient patientData);
 
-	public Patient updatePatient(String caseId, Patient patientData);
+    Patient updatePatient(String caseId, Patient patientData);
 
-	public String deletePatient(String caseId);
+    String deletePatient(String caseId);
 }

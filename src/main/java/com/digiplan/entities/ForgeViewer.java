@@ -18,23 +18,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "forge_viewer_data")
 public class ForgeViewer {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "item_id")
-	private Integer id;
-	private String caseId;
-	private String type1;
-	private String type2;
-	@Column(name = "created_date")
-	private LocalDateTime createDate;
-	@Column(name = "updated_date")
-	private LocalDateTime updatedDate;
-	@Column(name = "forge_viewer_link")
-	private String forgeViewerLink;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
+    private Integer id;
+    private String caseId;
+    private String type1;
+    private String type2;
+    @Column(name = "created_date")
+    private LocalDateTime createDate;
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
+    @Column(name = "forge_viewer_link")
+    private String forgeViewerLink;
 
 }

@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "alignwise_citymaster")
 public class City {
 
-	private String id;
-	@Id
-	@Column(name = "name")
-	private String cityName;
+    private String id;
+    @Id
+    @Column(name = "name")
+    private String cityName;
 
 }

@@ -19,44 +19,44 @@ import com.digiplan.services.QueryService;
 @RestController
 public class QueryController {
 
-	@Autowired
-	private QueryService queryService;
+    @Autowired
+    private QueryService queryService;
 
-	@GetMapping("/getQuery/{queryId}")
-	public ResponseEntity<Query> getQuery(@PathVariable String queryId) {
-		Query query = this.queryService.getQuery(queryId);
-		if (query != null)
-			return new ResponseEntity<Query>(query, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @GetMapping("/getQuery/{queryId}")
+    public ResponseEntity<Query> getQuery(@PathVariable String queryId) {
+        Query query = this.queryService.getQuery(queryId);
+        if (query != null)
+            return new ResponseEntity<Query>(query, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@GetMapping("/getAllQueries")
-	public List<Query> getAllQueries() {
-		return this.queryService.getAllQueries();
-	}
+    @GetMapping("/getAllQueries")
+    public List<Query> getAllQueries() {
+        return this.queryService.getAllQueries();
+    }
 
-	@PostMapping("/addQuery")
-	public ResponseEntity<Query> addQuery(@RequestBody Query queryData) {
-		return new ResponseEntity<Query>(this.queryService.addQuery(queryData), HttpStatus.CREATED);
-	}
+    @PostMapping("/addQuery")
+    public ResponseEntity<Query> addQuery(@RequestBody Query queryData) {
+        return new ResponseEntity<Query>(this.queryService.addQuery(queryData), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/updateQuery/{queryId}")
-	public ResponseEntity<Query> updateQuery(@PathVariable String queryId, @RequestBody Query queryData) {
-		Query query = this.queryService.updateQuery(queryId, queryData);
-		if (query != null)
-			return new ResponseEntity<Query>(query, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @PutMapping("/updateQuery/{queryId}")
+    public ResponseEntity<Query> updateQuery(@PathVariable String queryId, @RequestBody Query queryData) {
+        Query query = this.queryService.updateQuery(queryId, queryData);
+        if (query != null)
+            return new ResponseEntity<Query>(query, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@DeleteMapping("/deleteQuery/{queryId}")
-	public ResponseEntity<String> deleteQuery(@PathVariable String queryId) {
-		String status = this.queryService.deleteQuery(queryId);
-		if (status != null)
-			return new ResponseEntity<String>(status, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @DeleteMapping("/deleteQuery/{queryId}")
+    public ResponseEntity<String> deleteQuery(@PathVariable String queryId) {
+        String status = this.queryService.deleteQuery(queryId);
+        if (status != null)
+            return new ResponseEntity<String>(status, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

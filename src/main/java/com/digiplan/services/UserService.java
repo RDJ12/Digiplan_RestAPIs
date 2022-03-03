@@ -6,13 +6,13 @@ import com.digiplan.entities.User;
 
 public interface UserService {
 
-	public User getUser(Integer id);
+	 User getUser(Integer id);
 
-	public List<User> getAllUsers();
+	 List<User> getAllUsers();
 
-	public User addUser(User userData);
+	 User addUser(User userData);
 
-	public User updateUser(Integer id, User userData);
+	 User updateUser(Integer id, User userData);
 
-	public String deleteUser(Integer id);
+	 String deleteUser(Integer id);
 }

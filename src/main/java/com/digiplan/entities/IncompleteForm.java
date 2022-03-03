@@ -18,23 +18,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "incompleteform")
 public class IncompleteForm {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "form_id")
-	private Integer id;
-	private LocalDate submittedOn = LocalDate.now();
-	private String formData;
-	private String submittedBy;
-	private String patientName;
-	private String remarks;
-	private String flag;
-	@Column(name = "doctor_name")
-	private String doctorName;
-	private String groupId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "form_id")
+    private Integer id;
+    private LocalDate submittedOn = LocalDate.now();
+    private String formData;
+    private String submittedBy;
+    private String patientName;
+    private String remarks;
+    private String flag;
+    @Column(name = "doctor_name")
+    private String doctorName;
+    private String groupId;
 
 }

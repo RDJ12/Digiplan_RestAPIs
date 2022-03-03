@@ -6,13 +6,13 @@ import com.digiplan.entities.City;
 
 public interface CityService {
 
-	public City getCity(String cityName);
+    City getCity(String cityName);
 
-	public List<City> getAllCities();
+    List<City> getAllCities();
 
-	public City addCity(City cityData);
+    City addCity(City cityData);
 
-	public City updateCity(String cityName, City cityData);
+    City updateCity(String cityName, City cityData);
 
-	public String deleteCity(String cityName);
+    String deleteCity(String cityName);
 }

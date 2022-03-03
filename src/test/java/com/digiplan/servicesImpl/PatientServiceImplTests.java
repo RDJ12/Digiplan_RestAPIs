@@ -21,61 +21,61 @@ import com.digiplan.repositories.PatientRepository;
 @SpringBootTest
 public class PatientServiceImplTests {
 
-	@InjectMocks
-	private PatientServiceImpl patientServiceImpl;
+    @InjectMocks
+    private PatientServiceImpl patientServiceImpl;
 
-	@Mock
-	private PatientRepository patientRepository;
+    @Mock
+    private PatientRepository patientRepository;
 
-	@Test
-	public void test_getPatient() throws Exception {
-		Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
-				"Dental Case");
-		Optional<Patient> retrievedData = Optional
-				.of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-		String caseId = "1001001000";
-		when(patientRepository.findById(caseId)).thenReturn(retrievedData);
-		if (retrievedData.isPresent())
-			when(patientRepository.getById(caseId)).thenReturn(patient);
-		assertEquals(caseId, patientServiceImpl.getPatient(caseId).getCaseId());
-	}
+    @Test
+    public void test_getPatient() {
+        Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
+                "Dental Case");
+        Optional<Patient> retrievedData = Optional
+                .of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
+        String caseId = "1001001000";
+        when(patientRepository.findById(caseId)).thenReturn(retrievedData);
+        if (retrievedData.isPresent())
+            when(patientRepository.getById(caseId)).thenReturn(patient);
+        assertEquals(caseId, patientServiceImpl.getPatient(caseId).getCaseId());
+    }
 
-	@Test
-	public void test_getAllPatients() throws Exception {
-		List<Patient> patient = new ArrayList<>();
-		patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-		patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-		patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-		when(patientRepository.findAll()).thenReturn(patient);
-		assertEquals(3, patientServiceImpl.getAllPatients().size());
-	}
+    @Test
+    public void test_getAllPatients() {
+        List<Patient> patient = new ArrayList<>();
+        patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
+        patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
+        patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
+        when(patientRepository.findAll()).thenReturn(patient);
+        assertEquals(3, patientServiceImpl.getAllPatients().size());
+    }
 
-	@Test
-	public void test_addPatient() throws Exception {
-		Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
-				"Dental Case");
-		when(patientRepository.saveAndFlush(patient)).thenReturn(patient);
-		assertEquals(patient, patientServiceImpl.addPatient(patient));
-	}
+    @Test
+    public void test_addPatient() {
+        Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
+                "Dental Case");
+        when(patientRepository.saveAndFlush(patient)).thenReturn(patient);
+        assertEquals(patient, patientServiceImpl.addPatient(patient));
+    }
 
-	@Test
-	public void test_updatePatient() throws Exception {
-		Patient patient = new Patient("1001001000", "Shilpa", "Female", new Date(1960 - 01 - 22), "30", "1",
-				"Dental Case");
-		Optional<Patient> retrievedData = Optional
-				.of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-		String caseId = "1001001000";
-		when(patientRepository.findById(caseId)).thenReturn(retrievedData);
-		if (retrievedData.isPresent())
-			when(patientRepository.saveAndFlush(patient)).thenReturn(patient);
-		assertEquals(patient, patientServiceImpl.updatePatient(caseId, patient));
-	}
+    @Test
+    public void test_updatePatient() {
+        Patient patient = new Patient("1001001000", "Shilpa", "Female", new Date(1960 - 01 - 22), "30", "1",
+                "Dental Case");
+        Optional<Patient> retrievedData = Optional
+                .of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
+        String caseId = "1001001000";
+        when(patientRepository.findById(caseId)).thenReturn(retrievedData);
+        if (retrievedData.isPresent())
+            when(patientRepository.saveAndFlush(patient)).thenReturn(patient);
+        assertEquals(patient, patientServiceImpl.updatePatient(caseId, patient));
+    }
 
-	@Test
-	public void test_deletePatient() throws Exception {
-		String caseId = "1001001000";
-		patientServiceImpl.deletePatient(caseId);
-		verify(patientRepository, times(1)).deleteById(caseId);
-	}
+    @Test
+    public void test_deletePatient() {
+        String caseId = "1001001000";
+        patientServiceImpl.deletePatient(caseId);
+        verify(patientRepository, times(1)).deleteById(caseId);
+    }
 
 }

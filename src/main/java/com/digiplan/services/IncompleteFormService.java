@@ -6,13 +6,13 @@ import com.digiplan.entities.IncompleteForm;
 
 public interface IncompleteFormService {
 
-	public IncompleteForm getIncompleteForm(Integer id);
+    IncompleteForm getIncompleteForm(Integer id);
 
-	public List<IncompleteForm> getAllIncompleteForms();
+    List<IncompleteForm> getAllIncompleteForms();
 
-	public IncompleteForm addIncompleteForm(IncompleteForm incompleteFormData);
+    IncompleteForm addIncompleteForm(IncompleteForm incompleteFormData);
 
-	public IncompleteForm updateIncompleteForm(Integer id, IncompleteForm incompleteFormData);
+    IncompleteForm updateIncompleteForm(Integer id, IncompleteForm incompleteFormData);
 
-	public String deleteIncompleteForm(Integer id);
+    String deleteIncompleteForm(Integer id);
 }

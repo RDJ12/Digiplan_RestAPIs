@@ -17,17 +17,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "alignwise_drafts")
 public class Draft {
 
-	private LocalDate savedOn = LocalDate.now();
-	private String formData;
-	private String savedBy;
-	private Integer isActive;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    private LocalDate savedOn = LocalDate.now();
+    private String formData;
+    private String savedBy;
+    private Integer isActive;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
 }

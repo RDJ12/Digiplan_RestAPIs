@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "alignwise_usergroups")
 public class UserGroup {
 
-	@Id
-	private String groupId;
-	private String groupName;
+    @Id
+    private String groupId;
+    private String groupName;
 
 }

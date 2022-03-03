@@ -20,56 +20,56 @@ import com.digiplan.repositories.UserGroupRepository;
 @SpringBootTest
 public class UserGroupServiceImplTests {
 
-	@InjectMocks
-	private UserGroupServiceImpl userGroupServiceImpl;
+    @InjectMocks
+    private UserGroupServiceImpl userGroupServiceImpl;
 
-	@Mock
-	private UserGroupRepository userGroupRepository;
+    @Mock
+    private UserGroupRepository userGroupRepository;
 
-	@Test
-	public void test_getUserGroup() throws Exception {
-		UserGroup userGroup = new UserGroup("1", "CATCAM");
-		Optional<UserGroup> retrievedData = Optional.of(new UserGroup("1", "Testing"));
-		String groupId = "1";
-		when(userGroupRepository.findById(groupId)).thenReturn(retrievedData);
-		if (retrievedData.isPresent())
-			when(userGroupRepository.getById(groupId)).thenReturn(userGroup);
-		assertEquals(groupId, userGroupServiceImpl.getUserGroup(groupId).getGroupId());
-	}
+    @Test
+    public void test_getUserGroup() {
+        UserGroup userGroup = new UserGroup("1", "CATCAM");
+        Optional<UserGroup> retrievedData = Optional.of(new UserGroup("1", "Testing"));
+        String groupId = "1";
+        when(userGroupRepository.findById(groupId)).thenReturn(retrievedData);
+        if (retrievedData.isPresent())
+            when(userGroupRepository.getById(groupId)).thenReturn(userGroup);
+        assertEquals(groupId, userGroupServiceImpl.getUserGroup(groupId).getGroupId());
+    }
 
-	@Test
-	public void test_getAllUserGroups() throws Exception {
-		List<UserGroup> userGroup = new ArrayList<>();
-		userGroup.add(new UserGroup("1", "CATCAM"));
-		userGroup.add(new UserGroup("2", "CATCAM"));
-		userGroup.add(new UserGroup("3", "CATCAM"));
-		when(userGroupRepository.findAll()).thenReturn(userGroup);
-		assertEquals(3, userGroupServiceImpl.getAllUserGroups().size());
-	}
+    @Test
+    public void test_getAllUserGroups() {
+        List<UserGroup> userGroup = new ArrayList<>();
+        userGroup.add(new UserGroup("1", "CATCAM"));
+        userGroup.add(new UserGroup("2", "CATCAM"));
+        userGroup.add(new UserGroup("3", "CATCAM"));
+        when(userGroupRepository.findAll()).thenReturn(userGroup);
+        assertEquals(3, userGroupServiceImpl.getAllUserGroups().size());
+    }
 
-	@Test
-	public void test_addUserGroup() throws Exception {
-		UserGroup userGroup = new UserGroup("1", "CATCAM");
-		when(userGroupRepository.saveAndFlush(userGroup)).thenReturn(userGroup);
-		assertEquals(userGroup, userGroupServiceImpl.addUserGroup(userGroup));
-	}
+    @Test
+    public void test_addUserGroup() {
+        UserGroup userGroup = new UserGroup("1", "CATCAM");
+        when(userGroupRepository.saveAndFlush(userGroup)).thenReturn(userGroup);
+        assertEquals(userGroup, userGroupServiceImpl.addUserGroup(userGroup));
+    }
 
-	@Test
-	public void test_updateUserGroup() throws Exception {
-		UserGroup userGroup = new UserGroup("1", "CATCAM");
-		Optional<UserGroup> retrievedData = Optional.of(new UserGroup("1", "Testing"));
-		String groupId = "1";
-		when(userGroupRepository.findById(groupId)).thenReturn(retrievedData);
-		if (retrievedData.isPresent())
-			when(userGroupRepository.saveAndFlush(userGroup)).thenReturn(userGroup);
-		assertEquals(userGroup, userGroupServiceImpl.updateUserGroup(groupId, userGroup));
-	}
+    @Test
+    public void test_updateUserGroup() {
+        UserGroup userGroup = new UserGroup("1", "CATCAM");
+        Optional<UserGroup> retrievedData = Optional.of(new UserGroup("1", "Testing"));
+        String groupId = "1";
+        when(userGroupRepository.findById(groupId)).thenReturn(retrievedData);
+        if (retrievedData.isPresent())
+            when(userGroupRepository.saveAndFlush(userGroup)).thenReturn(userGroup);
+        assertEquals(userGroup, userGroupServiceImpl.updateUserGroup(groupId, userGroup));
+    }
 
-	@Test
-	public void test_deleteUserGroup() throws Exception {
-		String groupId = "1";
-		userGroupServiceImpl.deleteUserGroup(groupId);
-		verify(userGroupRepository, times(1)).deleteById(groupId);
-	}
+    @Test
+    public void test_deleteUserGroup() {
+        String groupId = "1";
+        userGroupServiceImpl.deleteUserGroup(groupId);
+        verify(userGroupRepository, times(1)).deleteById(groupId);
+    }
 
 }

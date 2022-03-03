@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
+@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
 @Table(name = "gallery")
 public class Gallery {
 
-	@Id
-	private String caseId;
-	private String submittedOn = LocalDate.now().toString();
-	private String treatmentLink;
-	private String downloadLink;
-	private String formData;
-	private String submittedBy;
-	private String remarks;
+    @Id
+    private String caseId;
+    private String submittedOn = LocalDate.now().toString();
+    private String treatmentLink;
+    private String downloadLink;
+    private String formData;
+    private String submittedBy;
+    private String remarks;
 
 }

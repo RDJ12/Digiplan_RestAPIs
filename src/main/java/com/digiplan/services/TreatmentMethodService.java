@@ -6,14 +6,14 @@ import com.digiplan.entities.TreatmentMethod;
 
 public interface TreatmentMethodService {
 
-	public TreatmentMethod getTreatmentMethodData(String id);
+    TreatmentMethod getTreatmentMethodData(String id);
 
-	public List<TreatmentMethod> getAllTreatmentMethodData();
+    List<TreatmentMethod> getAllTreatmentMethodData();
 
-	public TreatmentMethod addTreatmentMethodData(TreatmentMethod treatmentMethodData);
+    TreatmentMethod addTreatmentMethodData(TreatmentMethod treatmentMethodData);
 
-	public TreatmentMethod updateTreatmentMethodData(String id, TreatmentMethod treatmentMethodData);
+    TreatmentMethod updateTreatmentMethodData(String id, TreatmentMethod treatmentMethodData);
 
-	public String deleteTreatmentMethodData(String id);
+    String deleteTreatmentMethodData(String id);
 
 }

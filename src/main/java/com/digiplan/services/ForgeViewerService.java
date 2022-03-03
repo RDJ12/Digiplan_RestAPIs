@@ -6,13 +6,13 @@ import com.digiplan.entities.ForgeViewer;
 
 public interface ForgeViewerService {
 
-	public ForgeViewer getForgeViewer(Integer id);
+    ForgeViewer getForgeViewer(Integer id);
 
-	public List<ForgeViewer> getAllForgeViewers();
+    List<ForgeViewer> getAllForgeViewers();
 
-	public ForgeViewer addForgeViewer(ForgeViewer forgeViewerData);
+    ForgeViewer addForgeViewer(ForgeViewer forgeViewerData);
 
-	public ForgeViewer updateForgeViewer(Integer id, ForgeViewer forgeViewerData);
+    ForgeViewer updateForgeViewer(Integer id, ForgeViewer forgeViewerData);
 
-	public String deleteForgeViewer(Integer id);
+    String deleteForgeViewer(Integer id);
 }

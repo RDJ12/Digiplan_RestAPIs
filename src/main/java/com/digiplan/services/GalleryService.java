@@ -5,13 +5,13 @@ import java.util.List;
 import com.digiplan.entities.Gallery;
 
 public interface GalleryService {
-	public Gallery getGalleryData(String caseId);
+    Gallery getGalleryData(String caseId);
 
-	public List<Gallery> getAllGalleryData();
+    List<Gallery> getAllGalleryData();
 
-	public Gallery addGalleryData(Gallery galleryData);
+    Gallery addGalleryData(Gallery galleryData);
 
-	public Gallery updateGalleryData(String caseId, Gallery galleryData);
+    Gallery updateGalleryData(String caseId, Gallery galleryData);
 
-	public String deleteGalleryData(String caseId);
+    String deleteGalleryData(String caseId);
 }

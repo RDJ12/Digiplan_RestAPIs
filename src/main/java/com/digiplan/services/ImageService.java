@@ -6,14 +6,14 @@ import com.digiplan.entities.Image;
 
 public interface ImageService {
 
-	public Image getImage(Integer id);
+    Image getImage(Integer id);
 
-	public List<Image> getAllImages();
+    List<Image> getAllImages();
 
-	public Image addImage(Image imageData);
+    Image addImage(Image imageData);
 
-	public Image updateImage(Integer id, Image imageData);
+    Image updateImage(Integer id, Image imageData);
 
-	public String deleteImage(Integer id);
+    String deleteImage(Integer id);
 
 }

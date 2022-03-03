@@ -19,44 +19,44 @@ import com.digiplan.services.CommentService;
 @RestController
 public class CommentController {
 
-	@Autowired
-	private CommentService commentService;
+    @Autowired
+    private CommentService commentService;
 
-	@GetMapping("/getComment/{id}")
-	public ResponseEntity<Comment> getComment(@PathVariable Integer id) {
-		Comment comment = this.commentService.getComment(id);
-		if (comment != null)
-			return new ResponseEntity<Comment>(comment, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @GetMapping("/getComment/{id}")
+    public ResponseEntity<Comment> getComment(@PathVariable Integer id) {
+        Comment comment = this.commentService.getComment(id);
+        if (comment != null)
+            return new ResponseEntity<Comment>(comment, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@GetMapping("/getAllComments")
-	public List<Comment> getAllComments() {
-		return this.commentService.getAllComments();
-	}
+    @GetMapping("/getAllComments")
+    public List<Comment> getAllComments() {
+        return this.commentService.getAllComments();
+    }
 
-	@PostMapping("/addComment")
-	public ResponseEntity<Comment> addComment(@RequestBody Comment commentData) {
-		return new ResponseEntity<Comment>(this.commentService.addComment(commentData), HttpStatus.CREATED);
-	}
+    @PostMapping("/addComment")
+    public ResponseEntity<Comment> addComment(@RequestBody Comment commentData) {
+        return new ResponseEntity<Comment>(this.commentService.addComment(commentData), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/updateComment/{id}")
-	public ResponseEntity<Comment> updateComment(@PathVariable Integer id, @RequestBody Comment commentData) {
-		Comment comment = this.commentService.updateComment(id, commentData);
-		if (comment != null)
-			return new ResponseEntity<Comment>(comment, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @PutMapping("/updateComment/{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable Integer id, @RequestBody Comment commentData) {
+        Comment comment = this.commentService.updateComment(id, commentData);
+        if (comment != null)
+            return new ResponseEntity<Comment>(comment, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@DeleteMapping("/deleteComment/{id}")
-	public ResponseEntity<String> deleteComment(@PathVariable Integer id) {
-		String status = this.commentService.deleteComment(id);
-		if (status.equals("Deleted"))
-			return new ResponseEntity<String>(status, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @DeleteMapping("/deleteComment/{id}")
+    public ResponseEntity<String> deleteComment(@PathVariable Integer id) {
+        String status = this.commentService.deleteComment(id);
+        if (status.equals("Deleted"))
+            return new ResponseEntity<String>(status, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

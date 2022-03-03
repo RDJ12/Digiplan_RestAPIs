@@ -6,13 +6,13 @@ import com.digiplan.entities.Dealer;
 
 public interface DealerService {
 
-	public Dealer getDealer(Integer id);
+    Dealer getDealer(Integer id);
 
-	public List<Dealer> getAllDealers();
+    List<Dealer> getAllDealers();
 
-	public Dealer addDealer(Dealer dealerData);
+    Dealer addDealer(Dealer dealerData);
 
-	public Dealer updateDealer(Integer id, Dealer dealerData);
+    Dealer updateDealer(Integer id, Dealer dealerData);
 
-	public String deleteDealer(Integer id);
+    String deleteDealer(Integer id);
 }

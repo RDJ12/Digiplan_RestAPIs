@@ -6,14 +6,14 @@ import com.digiplan.entities.Query;
 
 public interface QueryService {
 
-	public Query getQuery(String queryId);
+    Query getQuery(String queryId);
 
-	public List<Query> getAllQueries();
+    List<Query> getAllQueries();
 
-	public Query addQuery(Query queryData);
+    Query addQuery(Query queryData);
 
-	public Query updateQuery(String queryId, Query queryData);
+    Query updateQuery(String queryId, Query queryData);
 
-	public String deleteQuery(String queryId);
+    String deleteQuery(String queryId);
 
 }

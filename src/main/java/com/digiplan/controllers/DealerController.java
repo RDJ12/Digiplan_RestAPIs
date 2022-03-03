@@ -19,44 +19,44 @@ import com.digiplan.services.DealerService;
 @RestController
 public class DealerController {
 
-	@Autowired
-	private DealerService dealerService;
+    @Autowired
+    private DealerService dealerService;
 
-	@GetMapping("/getDealer/{id}")
-	public ResponseEntity<Dealer> getDealer(@PathVariable Integer id) {
-		Dealer dealer = this.dealerService.getDealer(id);
-		if (dealer != null)
-			return new ResponseEntity<Dealer>(dealer, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @GetMapping("/getDealer/{id}")
+    public ResponseEntity<Dealer> getDealer(@PathVariable Integer id) {
+        Dealer dealer = this.dealerService.getDealer(id);
+        if (dealer != null)
+            return new ResponseEntity<Dealer>(dealer, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@GetMapping("/getAllDealers")
-	public List<Dealer> getAllDealers() {
-		return this.dealerService.getAllDealers();
-	}
+    @GetMapping("/getAllDealers")
+    public List<Dealer> getAllDealers() {
+        return this.dealerService.getAllDealers();
+    }
 
-	@PostMapping("/addDealer")
-	public ResponseEntity<Dealer> addDraft(@RequestBody Dealer dealerData) {
-		return new ResponseEntity<Dealer>(this.dealerService.addDealer(dealerData), HttpStatus.CREATED);
-	}
+    @PostMapping("/addDealer")
+    public ResponseEntity<Dealer> addDraft(@RequestBody Dealer dealerData) {
+        return new ResponseEntity<Dealer>(this.dealerService.addDealer(dealerData), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/updateDealer/{id}")
-	public ResponseEntity<Dealer> updateDealer(@PathVariable Integer id, @RequestBody Dealer dealerData) {
-		Dealer dealer = this.dealerService.updateDealer(id, dealerData);
-		if (dealer != null)
-			return new ResponseEntity<Dealer>(dealer, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @PutMapping("/updateDealer/{id}")
+    public ResponseEntity<Dealer> updateDealer(@PathVariable Integer id, @RequestBody Dealer dealerData) {
+        Dealer dealer = this.dealerService.updateDealer(id, dealerData);
+        if (dealer != null)
+            return new ResponseEntity<Dealer>(dealer, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-	@DeleteMapping("/deleteDealer/{id}")
-	public ResponseEntity<String> deleteDealer(@PathVariable Integer id) {
-		String status = this.dealerService.deleteDealer(id);
-		if (status.equals("Deleted"))
-			return new ResponseEntity<String>(status, HttpStatus.OK);
-		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	}
+    @DeleteMapping("/deleteDealer/{id}")
+    public ResponseEntity<String> deleteDealer(@PathVariable Integer id) {
+        String status = this.dealerService.deleteDealer(id);
+        if (status.equals("Deleted"))
+            return new ResponseEntity<String>(status, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 }

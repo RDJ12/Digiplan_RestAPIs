@@ -6,14 +6,14 @@ import com.digiplan.entities.Diagnosis;
 
 public interface DiagnosisService {
 
-	public Diagnosis getDiagnosisData(String id);
+    Diagnosis getDiagnosisData(String id);
 
-	public List<Diagnosis> getAllDiagnosisData();
+    List<Diagnosis> getAllDiagnosisData();
 
-	public Diagnosis addDiagnosisData(Diagnosis diagnosisData);
+    Diagnosis addDiagnosisData(Diagnosis diagnosisData);
 
-	public Diagnosis updateDiagnosisData(String id, Diagnosis diagnosisData);
+    Diagnosis updateDiagnosisData(String id, Diagnosis diagnosisData);
 
-	public String deleteDiagnosisData(String id);
+    String deleteDiagnosisData(String id);
 
 }
