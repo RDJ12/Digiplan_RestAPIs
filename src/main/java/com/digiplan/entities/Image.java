@@ -2,8 +2,12 @@ package com.digiplan.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,11 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
+@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
 @NoArgsConstructor
 @Table(name = "alignwise_images")
 public class Image {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "draft_id")
 	private Integer draftId;

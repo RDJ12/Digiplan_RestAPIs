@@ -24,7 +24,9 @@ public class CommentServiceImpl implements CommentService {
 		log.info("@Start getComment");
 		Comment comment = null;
 		try {
-			comment = commentRepository.getById(id);
+			Optional<Comment> check = commentRepository.findById(id);
+			if (check.isPresent())
+				comment = commentRepository.getById(id);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

@@ -29,8 +29,12 @@ public class CommentServiceImplTests {
 	@Test
 	public void test_getComment() throws Exception {
 		Comment comment = new Comment(1, "1802071938", "Karan", "General", "approved", null);
+		Optional<Comment> retrievedData = Optional
+				.of(new Comment(1, "1802071938", "Suraj", "General", "not approved", null));
 		Integer id = 1;
-		when(commentRepository.getById(id)).thenReturn(comment);
+		when(commentRepository.findById(id)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(commentRepository.getById(id)).thenReturn(comment);
 		assertEquals(id, commentServiceImpl.getComment(id).getId());
 	}
 

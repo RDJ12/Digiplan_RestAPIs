@@ -24,7 +24,9 @@ public class CityServiceImpl implements CityService {
 		log.info("@Start getCity");
 		City city = null;
 		try {
-			city = cityRepository.getById(cityName); 
+			Optional<City> check = cityRepository.findById(cityName);
+			if (check.isPresent())
+				city = cityRepository.getById(cityName);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

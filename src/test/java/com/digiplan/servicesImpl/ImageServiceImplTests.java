@@ -30,8 +30,12 @@ public class ImageServiceImplTests {
 	public void test_getImage() throws Exception {
 		Image image = new Image(1, 34, 62, "Ms.Alena Singh-1617608232735", "phase1", "download (1).jpg",
 				"download (4).jpg", "", "", "", "", "", "", "", "", "", "2103075521");
+		Optional<Image> retrievedData = Optional.of(new Image(1, 37, 92, "Karan Singh-1617608232735", "phase1",
+				"download (1).jpg", "download (4).jpg", "", "", "", "", "", "", "", "", "", "2103075521"));
 		Integer id = 1;
-		when(imageRepository.getById(id)).thenReturn(image);
+		when(imageRepository.findById(id)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(imageRepository.getById(id)).thenReturn(image);
 		assertEquals(id, imageServiceImpl.getImage(id).getId());
 	}
 

@@ -24,7 +24,9 @@ public class ImageServiceImpl implements ImageService {
 		log.info("@Start getImage");
 		Image image = null;
 		try {
-			image = imageRepository.getById(id);
+			Optional<Image> check = imageRepository.findById(id);
+			if (check.isPresent())
+				image = imageRepository.getById(id);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

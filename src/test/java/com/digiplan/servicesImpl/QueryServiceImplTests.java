@@ -29,8 +29,11 @@ public class QueryServiceImplTests {
 	@Test
 	public void test_getQuery() throws Exception {
 		Query query = new Query("1", "Karan", 9999999999L, "karankumar12@gmail.com", "demo");
+		Optional<Query> retrievedData = Optional.of(new Query("1", "Suraj", 5679996579L, "surajr12@gmail.com", "demo"));
 		String queryId = "1";
-		when(queryRepository.getById(queryId)).thenReturn(query);
+		when(queryRepository.findById(queryId)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(queryRepository.getById(queryId)).thenReturn(query);
 		assertEquals(queryId, queryServiceImpl.getQuery(queryId).getQueryId());
 	}
 

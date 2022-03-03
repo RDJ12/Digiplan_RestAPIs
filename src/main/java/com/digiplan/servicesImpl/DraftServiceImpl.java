@@ -24,7 +24,9 @@ public class DraftServiceImpl implements DraftService {
 		log.info("@Start getDraft");
 		Draft draft = null;
 		try {
-			draft = draftRepository.getById(id);
+			Optional<Draft> check = draftRepository.findById(id);
+			if (check.isPresent())
+				draft = draftRepository.getById(id);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

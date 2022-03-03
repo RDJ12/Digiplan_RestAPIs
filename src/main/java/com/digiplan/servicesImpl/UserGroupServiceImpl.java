@@ -24,7 +24,9 @@ public class UserGroupServiceImpl implements UserGroupService {
 		log.info("@Start getUserGroup");
 		UserGroup userGroup = null;
 		try {
-			userGroup = userGroupRepository.getById(groupId); 
+			Optional<UserGroup> check = userGroupRepository.findById(groupId);
+			if (check.isPresent())
+				userGroup = userGroupRepository.getById(groupId);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

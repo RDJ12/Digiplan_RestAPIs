@@ -24,7 +24,9 @@ public class QueryServiceImpl implements QueryService {
 		log.info("@Start getQuery");
 		Query query = null;
 		try {
-			query = queryRepository.getById(queryId);
+			Optional<Query> check = queryRepository.findById(queryId);
+			if (check.isPresent())
+				query = queryRepository.getById(queryId);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

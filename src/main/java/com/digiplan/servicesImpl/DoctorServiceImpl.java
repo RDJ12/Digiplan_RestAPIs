@@ -24,7 +24,9 @@ public class DoctorServiceImpl implements DoctorService {
 		log.info("@Start getDoctor");
 		Doctor doctor = null;
 		try {
-			doctor = doctorRepository.getById(caseId);
+			Optional<Doctor> check = doctorRepository.findById(caseId);
+			if (check.isPresent())
+				doctor = doctorRepository.getById(caseId);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

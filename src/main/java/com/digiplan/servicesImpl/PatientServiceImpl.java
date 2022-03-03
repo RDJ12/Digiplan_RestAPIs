@@ -24,7 +24,9 @@ public class PatientServiceImpl implements PatientService {
 		log.info("@Start getPatient");
 		Patient patient = null;
 		try {
-			patient = patientRepository.getById(caseId);
+			Optional<Patient> check = patientRepository.findById(caseId);
+			if (check.isPresent())
+				patient = patientRepository.getById(caseId);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

@@ -31,8 +31,13 @@ public class DealerServiceImplTests {
 		Dealer dealer = new Dealer(1, "H-63", "New Delhi", "Dr. Rahul Khanna", "Dr RAHUL'S DENTAL CARE", "9910138844",
 				"rahuldentist@gmail.com", "77.13451699999996", "28.690085", "Orthodonotist", "3rd floor", "near M2K",
 				"New Delhi", "Delhi", "110034");
+		Optional<Dealer> retrievedData = Optional.of(new Dealer(1, "H-63", "UP", "Dr. Karan Khanna",
+				"Dr RAHUL'S DENTAL CARE", "9910135564", "karan@gmail.com", "77.13451699999996", "28.690085",
+				"Orthodonotist", "3rd floor", "near M2K", "New Delhi", "Delhi", "110065"));
 		Integer id = 1;
-		when(dealerRepository.getById(id)).thenReturn(dealer);
+		when(dealerRepository.findById(id)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(dealerRepository.getById(id)).thenReturn(dealer);
 		assertEquals(id, dealerServiceImpl.getDealer(id).getId());
 	}
 

@@ -23,7 +23,9 @@ public class GalleryServiceImpl implements GalleryService {
 		log.info("@Start getGalleryData");
 		Gallery gallery = null;
 		try {
-			gallery = galleryRepository.getById(caseId);
+			Optional<Gallery> check = galleryRepository.findById(caseId);
+			if (check.isPresent())
+				gallery = galleryRepository.getById(caseId);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

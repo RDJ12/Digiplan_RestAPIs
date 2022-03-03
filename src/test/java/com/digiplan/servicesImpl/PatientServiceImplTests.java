@@ -31,8 +31,12 @@ public class PatientServiceImplTests {
 	public void test_getPatient() throws Exception {
 		Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
 				"Dental Case");
+		Optional<Patient> retrievedData = Optional
+				.of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
 		String caseId = "1001001000";
-		when(patientRepository.getById(caseId)).thenReturn(patient);
+		when(patientRepository.findById(caseId)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(patientRepository.getById(caseId)).thenReturn(patient);
 		assertEquals(caseId, patientServiceImpl.getPatient(caseId).getCaseId());
 	}
 

@@ -2,8 +2,12 @@ package com.digiplan.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
+@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
 @NoArgsConstructor
 @Table(name = "alignwise_users")
 public class User {
@@ -37,6 +42,7 @@ public class User {
 	private String promoted;
 	private String address;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer id;
 

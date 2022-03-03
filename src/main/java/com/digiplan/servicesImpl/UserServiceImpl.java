@@ -24,7 +24,9 @@ public class UserServiceImpl implements UserService {
 		log.info("@Start getUser");
 		User user = null;
 		try {
-			user = userRepository.getById(id);
+			Optional<User> check = userRepository.findById(id);
+			if (check.isPresent())
+				user = userRepository.getById(id);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

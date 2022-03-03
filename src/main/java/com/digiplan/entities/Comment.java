@@ -1,13 +1,15 @@
 package com.digiplan.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,11 +18,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
+@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "FieldHandler" })
 @NoArgsConstructor
 @Table(name = "comment")
 public class Comment {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id")
 	private Integer id;
 	@Column(name = "case_id")
@@ -29,7 +33,6 @@ public class Comment {
 	private String username;
 	private String stage;
 	private String comment;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
+	private LocalDateTime date = LocalDateTime.now();
 
 }

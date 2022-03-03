@@ -32,8 +32,13 @@ public class UserServiceImplTests {
 		User user = new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
 				9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
 				"13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1);
+		Optional<User> retrievedData = Optional.of(new User("skvyu", "render123#", "Delhi", "Karan", "Singh",
+				"sonaljavali@gmail.com", 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "6th Cross",
+				"up", "90043", "93.0105675", "97.6483568", "No", "No", "113, 4th Cross", 1));
 		Integer id = 1;
-		when(userRepository.getById(id)).thenReturn(user);
+		when(userRepository.findById(id)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(userRepository.getById(id)).thenReturn(user);
 		assertEquals(id, userServiceImpl.getUser(id).getId());
 	}
 

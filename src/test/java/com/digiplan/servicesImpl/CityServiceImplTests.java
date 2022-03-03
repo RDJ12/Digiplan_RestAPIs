@@ -29,8 +29,11 @@ public class CityServiceImplTests {
 	@Test
 	public void test_getCity() throws Exception {
 		City city = new City("1", "Bhopal");
+		Optional<City> retrievedData = Optional.of(new City("2", "Bhopal"));
 		String cityName = "Bhopal";
-		when(cityRepository.getById(cityName)).thenReturn(city);
+		when(cityRepository.findById(cityName)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(cityRepository.getById(cityName)).thenReturn(city);
 		assertEquals(cityName, cityServiceImpl.getCity(cityName).getCityName());
 	}
 

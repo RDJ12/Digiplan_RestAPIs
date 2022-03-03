@@ -29,8 +29,11 @@ public class UserGroupServiceImplTests {
 	@Test
 	public void test_getUserGroup() throws Exception {
 		UserGroup userGroup = new UserGroup("1", "CATCAM");
+		Optional<UserGroup> retrievedData = Optional.of(new UserGroup("1", "Testing"));
 		String groupId = "1";
-		when(userGroupRepository.getById(groupId)).thenReturn(userGroup);
+		when(userGroupRepository.findById(groupId)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(userGroupRepository.getById(groupId)).thenReturn(userGroup);
 		assertEquals(groupId, userGroupServiceImpl.getUserGroup(groupId).getGroupId());
 	}
 
@@ -38,8 +41,8 @@ public class UserGroupServiceImplTests {
 	public void test_getAllUserGroups() throws Exception {
 		List<UserGroup> userGroup = new ArrayList<>();
 		userGroup.add(new UserGroup("1", "CATCAM"));
-		userGroup.add(new UserGroup("1", "CATCAM"));
-		userGroup.add(new UserGroup("1", "CATCAM"));
+		userGroup.add(new UserGroup("2", "CATCAM"));
+		userGroup.add(new UserGroup("3", "CATCAM"));
 		when(userGroupRepository.findAll()).thenReturn(userGroup);
 		assertEquals(3, userGroupServiceImpl.getAllUserGroups().size());
 	}

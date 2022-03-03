@@ -30,8 +30,12 @@ public class GalleryServiceImplTests {
 	public void test_getGalleryData() throws Exception {
 		Gallery gallery = new Gallery("POB01", "2019-02-02", "", "",
 				"{'date':'2018-01-19','DoctorName':'Alignwise Smile Technologies'}", "", "");
+		Optional<Gallery> retrievedData = Optional.of(new Gallery("POB01", "2013-02-02", "", "",
+				"{'date':'2018-01-19','DoctorName':'Technologies'}", "", ""));
 		String caseId = "POB01";
-		when(galleryRepository.getById(caseId)).thenReturn(gallery);
+		when(galleryRepository.findById(caseId)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(galleryRepository.getById(caseId)).thenReturn(gallery);
 		assertEquals(caseId, galleryServiceImpl.getGalleryData(caseId).getCaseId());
 	}
 

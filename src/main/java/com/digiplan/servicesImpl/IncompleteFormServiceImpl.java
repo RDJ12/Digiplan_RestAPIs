@@ -24,7 +24,9 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
 		log.info("@Start getIncompleteForm");
 		IncompleteForm incompleteForm = null;
 		try {
-			incompleteForm = incompleteFormRepository.getById(id);
+			Optional<IncompleteForm> check = incompleteFormRepository.findById(id);
+			if (check.isPresent())
+				incompleteForm = incompleteFormRepository.getById(id);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}

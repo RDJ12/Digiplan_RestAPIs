@@ -5,8 +5,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,29 +29,33 @@ public class IncompleteFormServiceImplTests {
 
 	@Test
 	public void test_getIncompleteForm() throws Exception {
-		IncompleteForm incompleteForm = new IncompleteForm(1, new Date(2022 - 01 - 22),
+		IncompleteForm incompleteForm = new IncompleteForm(1, LocalDate.now(),
 				"{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan", "", "Vishnu", "N", "Suraj", "100");
+		Optional<IncompleteForm> retrievedData = Optional.of(new IncompleteForm(1, LocalDate.now(),
+				"{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan", "", "Vishnu", "N", "Suraj", "100"));
 		Integer id = 1;
-		when(incompleteFormRepository.getById(id)).thenReturn(incompleteForm);
+		when(incompleteFormRepository.findById(id)).thenReturn(retrievedData);
+		if (retrievedData.isPresent())
+			when(incompleteFormRepository.getById(id)).thenReturn(incompleteForm);
 		assertEquals(id, incompleteFormServiceImpl.getIncompleteForm(id).getId());
 	}
 
 	@Test
 	public void test_getAllIncompleteForms() throws Exception {
 		List<IncompleteForm> incompleteForm = new ArrayList<>();
-		incompleteForm.add(new IncompleteForm(1, new Date(2022 - 01 - 22), "{'date':'2019-03-28','DoctorName':'Suraj'}",
-				"Karan", "", "Vishnu", "N", "Suraj", "100"));
-		incompleteForm.add(new IncompleteForm(1, new Date(2022 - 01 - 22), "{'date':'2019-03-28','DoctorName':'Suraj'}",
-				"Karan", "", "Vishnu", "N", "Suraj", "100"));
-		incompleteForm.add(new IncompleteForm(1, new Date(2022 - 01 - 22), "{'date':'2019-03-28','DoctorName':'Suraj'}",
-				"Karan", "", "Vishnu", "N", "Suraj", "100"));
+		incompleteForm.add(new IncompleteForm(1, LocalDate.now(), "{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan",
+				"", "Vishnu", "N", "Suraj", "100"));
+		incompleteForm.add(new IncompleteForm(1, LocalDate.now(), "{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan",
+				"", "Vishnu", "N", "Suraj", "100"));
+		incompleteForm.add(new IncompleteForm(1, LocalDate.now(), "{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan",
+				"", "Vishnu", "N", "Suraj", "100"));
 		when(incompleteFormRepository.findAll()).thenReturn(incompleteForm);
 		assertEquals(3, incompleteFormServiceImpl.getAllIncompleteForms().size());
 	}
 
 	@Test
 	public void test_addIncompleteForm() throws Exception {
-		IncompleteForm incompleteForm = new IncompleteForm(1, new Date(2022 - 01 - 22),
+		IncompleteForm incompleteForm = new IncompleteForm(1, LocalDate.now(),
 				"{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan", "", "Vishnu", "N", "Suraj", "100");
 		when(incompleteFormRepository.saveAndFlush(incompleteForm)).thenReturn(incompleteForm);
 		assertEquals(incompleteForm, incompleteFormServiceImpl.addIncompleteForm(incompleteForm));
@@ -59,9 +63,9 @@ public class IncompleteFormServiceImplTests {
 
 	@Test
 	public void test_updateIncompleteForm() throws Exception {
-		IncompleteForm incompleteForm = new IncompleteForm(1, new Date(2022 - 01 - 22),
+		IncompleteForm incompleteForm = new IncompleteForm(1, LocalDate.now(),
 				"{'date':'2019-03-28','DoctorName':'Suraj'}", "Suraj", "", "Sudhi", "N", "Arjun", "90");
-		Optional<IncompleteForm> retrievedData = Optional.of(new IncompleteForm(1, new Date(2012 - 01 - 22),
+		Optional<IncompleteForm> retrievedData = Optional.of(new IncompleteForm(1, LocalDate.now(),
 				"{'date':'2019-03-28','DoctorName':'Suraj'}", "Karan", "", "Vishnu", "N", "Suraj", "100"));
 		Integer id = 1;
 		when(incompleteFormRepository.findById(id)).thenReturn(retrievedData);

@@ -24,7 +24,9 @@ public class DealerServiceImpl implements DealerService {
 		log.info("@Start getDealer");
 		Dealer dealer = null;
 		try {
-			dealer = dealerRepository.getById(id);
+			Optional<Dealer> check = dealerRepository.findById(id);
+			if (check.isPresent())
+				dealer = dealerRepository.getById(id);
 		} catch (Exception exception) {
 			log.error("Exception = " + exception);
 		}
