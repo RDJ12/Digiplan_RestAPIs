@@ -29,11 +29,11 @@ public class PatientServiceImplTests {
 
     @Test
     public void test_getPatient() {
-        Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
+        Patient patient = new Patient("2657656567", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1",
                 "Dental Case");
         Optional<Patient> retrievedData = Optional
-                .of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-        String caseId = "1001001000";
+                .of(new Patient("2657656567", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1", "Dental Case"));
+        String caseId = "2657656567";
         when(patientRepository.findById(caseId)).thenReturn(retrievedData);
         if (retrievedData.isPresent())
             when(patientRepository.getById(caseId)).thenReturn(patient);
@@ -43,16 +43,16 @@ public class PatientServiceImplTests {
     @Test
     public void test_getAllPatients() {
         List<Patient> patient = new ArrayList<>();
-        patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-        patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-        patient.add(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
+        patient.add(new Patient("2657656567", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1", "Dental Case"));
+        patient.add(new Patient("2657656545", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1", "Dental Case"));
+        patient.add(new Patient("2657656567", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1", "Dental Case"));
         when(patientRepository.findAll()).thenReturn(patient);
         assertEquals(3, patientServiceImpl.getAllPatients().size());
     }
 
     @Test
     public void test_addPatient() {
-        Patient patient = new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1",
+        Patient patient = new Patient("2657656567", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1",
                 "Dental Case");
         when(patientRepository.saveAndFlush(patient)).thenReturn(patient);
         assertEquals(patient, patientServiceImpl.addPatient(patient));
@@ -60,11 +60,11 @@ public class PatientServiceImplTests {
 
     @Test
     public void test_updatePatient() {
-        Patient patient = new Patient("1001001000", "Shilpa", "Female", new Date(1960 - 01 - 22), "30", "1",
+        Patient patient = new Patient("2657656567", "Shilpa", "Female", new Date(1960 - 12 - 22), "30", "1",
                 "Dental Case");
         Optional<Patient> retrievedData = Optional
-                .of(new Patient("1001001000", "Karan", "Male", new Date(1960 - 01 - 22), "36", "1", "Dental Case"));
-        String caseId = "1001001000";
+                .of(new Patient("2657656567", "Karan", "Male", new Date(1960 - 12 - 22), "36", "1", "Dental Case"));
+        String caseId = "2657656567";
         when(patientRepository.findById(caseId)).thenReturn(retrievedData);
         if (retrievedData.isPresent())
             when(patientRepository.saveAndFlush(patient)).thenReturn(patient);
@@ -73,7 +73,7 @@ public class PatientServiceImplTests {
 
     @Test
     public void test_deletePatient() {
-        String caseId = "1001001000";
+        String caseId = "2657656567";
         patientServiceImpl.deletePatient(caseId);
         verify(patientRepository, times(1)).deleteById(caseId);
     }

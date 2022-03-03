@@ -41,8 +41,8 @@ public class QueryServiceImplTests {
     public void test_getAllQueries() {
         List<Query> query = new ArrayList<>();
         query.add(new Query("1", "Karan", 9999999999L, "karankumar12@gmail.com", "demo"));
-        query.add(new Query("1", "Karan", 9999999999L, "karankumar12@gmail.com", "demo"));
-        query.add(new Query("1", "Karan", 9999999999L, "karankumar12@gmail.com", "demo"));
+        query.add(new Query("2", "Karan", 9999999999L, "karankumar12@gmail.com", "demo"));
+        query.add(new Query("3", "Karan", 9999999999L, "karankumar12@gmail.com", "demo"));
         when(queryRepository.findAll()).thenReturn(query);
         assertEquals(3, queryServiceImpl.getAllQueries().size());
     }
