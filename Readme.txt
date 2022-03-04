@@ -31,4 +31,4 @@ Request URL Mapping (Ex - City)
 3. add - addCity
 4. update - updateCity/id
 5. delete - deleteCity/id
-All request mapping are done in same manner.
+All request mappings are done in same manner.
