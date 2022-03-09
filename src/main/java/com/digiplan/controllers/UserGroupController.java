@@ -54,7 +54,7 @@ public class UserGroupController {
     @DeleteMapping("/deleteUserGroup/{groupId}")
     public ResponseEntity<String> deleteUserGroup(@PathVariable String groupId) {
         String status = this.userGroupService.deleteUserGroup(groupId);
-        if (status != null)
+        if (status.equals("Deleted"))
             return new ResponseEntity<String>(status, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

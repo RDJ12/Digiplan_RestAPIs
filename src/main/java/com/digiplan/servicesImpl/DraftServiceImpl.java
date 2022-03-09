@@ -1,5 +1,6 @@
 package com.digiplan.servicesImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,6 +83,23 @@ public class DraftServiceImpl implements DraftService {
             log.error("Exception = " + exception);
         }
         return status;
+    }
+
+    @Override
+    public List<Draft> viewDrafts(Draft draftData) {
+        log.info("@Start viewDrafts");
+        List<Draft> drafts = new ArrayList<>();
+        try {
+            List<Draft> draftList = draftRepository.findAll();
+            for (Draft draft : draftList) {
+                if (draft.getSavedBy().equalsIgnoreCase(draftData.getSavedBy()) && draft.getIsActive() == 1) {
+                    drafts.add(draft);
+                }
+            }
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return drafts;
     }
 
 }

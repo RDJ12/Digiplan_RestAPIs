@@ -53,7 +53,7 @@ public class PatientController {
     @DeleteMapping("/deletePatient/{caseId}")
     public ResponseEntity<String> deletePatient(@PathVariable String caseId) {
         String status = this.patientService.deletePatient(caseId);
-        if (status != null)
+        if (status.equals("Deleted"))
             return new ResponseEntity<String>(status, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -36,7 +36,7 @@ public class QueryController {
         return this.queryService.getAllQueries();
     }
 
-    @PostMapping("/addQuery")
+    @PostMapping("/contactus")
     public ResponseEntity<Query> addQuery(@RequestBody Query queryData) {
         return new ResponseEntity<Query>(this.queryService.addQuery(queryData), HttpStatus.CREATED);
     }
@@ -53,7 +53,7 @@ public class QueryController {
     @DeleteMapping("/deleteQuery/{queryId}")
     public ResponseEntity<String> deleteQuery(@PathVariable String queryId) {
         String status = this.queryService.deleteQuery(queryId);
-        if (status != null)
+        if (status.equals("Deleted"))
             return new ResponseEntity<String>(status, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

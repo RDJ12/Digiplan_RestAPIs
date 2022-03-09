@@ -74,10 +74,52 @@ public class UserServiceImpl implements UserService {
     @Override
     public String deleteUser(Integer id) {
         log.info("@Start deleteUser");
-        String status = "Not Deleted";
+        String status = "";
         try {
             userRepository.deleteById(id);
             status = "Deleted";
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return status;
+    }
+
+    @Override
+    public String login(User userData) {
+        log.info("@Start login");
+        User user = null;
+        String isPresent = "";
+        try {
+            user = userRepository.findByUsernameAndPassword(userData.getUsername(), userData.getPassword());
+            if (user != null)
+                isPresent = "Logged In";
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return isPresent;
+    }
+
+    @Override
+    public String forgetPassword(User userData) {
+        log.info("@Start forgetPassword");
+        String status = "";
+        List<User> usersList = null;
+        try {
+            if (userData.getPassword().equals(userData.getConfirmNewPassword())) {
+                usersList = userRepository.findAll();
+                for (User user : usersList) {
+                    if (user.getUsername().equalsIgnoreCase(userData.getUsername()) && user.getPhoneNumber().longValue() == userData.getPhoneNumber().longValue()) {
+                        if (!user.getPassword().equals(userData.getPassword())) {
+                            user.setPassword(userData.getPassword());
+                            userRepository.saveAndFlush(user);
+                            status = "Reset Successful";
+                        }
+                        status = "Reset Successful";
+                    }
+                }
+            } else {
+                status = "Password not matching";
+            }
         } catch (Exception exception) {
             log.error("Exception = " + exception);
         }

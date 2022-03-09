@@ -15,4 +15,6 @@ public interface DraftService {
     Draft updateDraft(Integer id, Draft draftData);
 
     String deleteDraft(Integer id);
+
+    List<Draft> viewDrafts(Draft draftData);
 }

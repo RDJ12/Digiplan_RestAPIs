@@ -31,7 +31,7 @@ public class CityController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/getAllCities")
+    @PostMapping("/fetchcities")
     public List<City> getAllCities() {
         return this.cityService.getAllCities();
     }
