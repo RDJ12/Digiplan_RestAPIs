@@ -1,8 +1,11 @@
 package com.digiplan.servicesImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+//import org.json.simple.JSONObject;
 
+import com.digiplan.entities.Cases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,19 +106,18 @@ public class UserServiceImpl implements UserService {
     public String forgetPassword(User userData) {
         log.info("@Start forgetPassword");
         String status = "";
-        List<User> usersList = null;
+        User user = null;
         try {
             if (userData.getPassword().equals(userData.getConfirmNewPassword())) {
-                usersList = userRepository.findAll();
-                for (User user : usersList) {
-                    if (user.getUsername().equalsIgnoreCase(userData.getUsername()) && user.getPhoneNumber().longValue() == userData.getPhoneNumber().longValue()) {
-                        if (!user.getPassword().equals(userData.getPassword())) {
-                            user.setPassword(userData.getPassword());
-                            userRepository.saveAndFlush(user);
-                            status = "Reset Successful";
-                        }
+                user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
+                if (user != null) {
+                    System.out.println(user.toString());
+                    if (!user.getPassword().equals(userData.getPassword())) {
+                        user.setPassword(userData.getPassword());
+                        userRepository.saveAndFlush(user);
                         status = "Reset Successful";
                     }
+                    status = "Reset Successful";
                 }
             } else {
                 status = "Password not matching";
@@ -124,6 +126,33 @@ public class UserServiceImpl implements UserService {
             log.error("Exception = " + exception);
         }
         return status;
+    }
+
+    @Override
+    public List<User> getUsersList(String username) {
+        log.info("@Start getUsersList");
+        List<User> user = null;
+        List<String> name = new ArrayList<>();
+        List<String> caseName = new ArrayList<>();
+        try {
+            user = userRepository.findAllUsersList(username);
+            for(User u:user){
+                name.add(u.getUsername());
+            }
+            List<Cases> cases = null;
+
+            CaseServiceImpl caseServiceImpl = null;
+            cases = caseServiceImpl.getAllCases();
+
+            for(Cases c:cases){
+              //  caseName.add(new JSONObject());
+                caseName.add(c.getFormData());
+            }
+
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return user;
     }
 
 }

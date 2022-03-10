@@ -31,10 +31,10 @@ public class UserServiceImplTests {
 
         User user = new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
                 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
-                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1);
+                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1, "");
         Optional<User> retrievedData = Optional.of(new User("skvyu", "render123#", "Delhi", "Karan", "Singh",
                 "sonaljavali@gmail.com", 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "6th Cross",
-                "up", "90043", "93.0105675", "97.6483568", "No", "No", "113, 4th Cross", 1));
+                "up", "90043", "93.0105675", "97.6483568", "No", "No", "113, 4th Cross", 1, ""));
         Integer id = 1;
         when(userRepository.findById(id)).thenReturn(retrievedData);
         if (retrievedData.isPresent())
@@ -47,13 +47,13 @@ public class UserServiceImplTests {
         List<User> user = new ArrayList<>();
         user.add(new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
                 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
-                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1));
+                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1, ""));
         user.add(new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
                 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
-                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1));
+                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1, ""));
         user.add(new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
                 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
-                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1));
+                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1, ""));
         when(userRepository.findAll()).thenReturn(user);
         assertEquals(3, userServiceImpl.getAllUsers().size());
     }
@@ -62,7 +62,7 @@ public class UserServiceImplTests {
     public void test_addUser() {
         User user = new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
                 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
-                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1);
+                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1, "");
         when(userRepository.saveAndFlush(user)).thenReturn(user);
         assertEquals(user, userServiceImpl.addUser(user));
     }
@@ -71,10 +71,10 @@ public class UserServiceImplTests {
     public void test_updateUser() {
         User user = new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
                 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "4th Cross", "Karnataka", "560043",
-                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1);
+                "13.0105675", "77.6483568", "No", "No", "113, 4th Cross", 1, "");
         Optional<User> retrievedData = Optional.of(new User("skvyu", "render123#", "Delhi", "Karan", "Singh",
                 "sonaljavali@gmail.com", 9901500892L, "Doctor", "chaitanya", "50", "Clove Dental", "113", "6th Cross",
-                "up", "90043", "93.0105675", "97.6483568", "No", "No", "113, 4th Cross", 1));
+                "up", "90043", "93.0105675", "97.6483568", "No", "No", "113, 4th Cross", 1, ""));
         Integer id = 1;
         when(userRepository.findById(id)).thenReturn(retrievedData);
         if (retrievedData.isPresent())

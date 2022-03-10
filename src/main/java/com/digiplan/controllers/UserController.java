@@ -76,20 +76,7 @@ public class UserController {
 
     @PostMapping("/mycase")
     public List<User> myCases(@RequestBody User userData) {
-        log.info("@Start myCases");
-
-        List<User> list = new ArrayList<>();
-        try {
-            List<User> usersList = this.userService.getAllUsers();
-            for (User user : usersList) {
-                if (user.getUsername().equalsIgnoreCase(userData.getUsername()) && user.getTypeofUser().equals("DoctorAdmin")) {
-                    list.add(user);
-                }
-            }
-        } catch (Exception exception) {
-            log.error("Exception = " + exception);
-        }
-        return list;
+        return this.userService.getUsersList(userData.getUsername());
     }
 
 }
