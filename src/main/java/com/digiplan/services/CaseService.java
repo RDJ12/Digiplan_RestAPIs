@@ -11,5 +11,5 @@ public interface CaseService {
 
     Cases addCase(Cases casesData);
 
-    List<JSONArray> myCases(String username);
+    JSONArray myCases(String username);
 }

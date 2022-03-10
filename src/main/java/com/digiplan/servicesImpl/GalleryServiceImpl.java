@@ -1,16 +1,17 @@
 package com.digiplan.servicesImpl;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.digiplan.entities.Gallery;
 import com.digiplan.repositories.GalleryRepository;
 import com.digiplan.services.GalleryService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -81,6 +82,29 @@ public class GalleryServiceImpl implements GalleryService {
             log.error("Exception = " + exception);
         }
         return status;
+    }
+
+    @Override
+    public JSONArray getSamples() {
+        log.info("@Start myCases");
+        JSONParser jsonParser = new JSONParser();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            List<Gallery> galleryList = galleryRepository.findAll();
+            for (Gallery gallery : galleryList) {
+                JSONObject jsonObject = new JSONObject();
+                JSONObject extractedData = (JSONObject) jsonParser.parse(gallery.getFormData());
+                jsonObject.put("patientName", extractedData.get("PatientName"));
+                jsonObject.put("serialNumber", extractedData.get("serialnumber"));
+                jsonObject.put("dob", extractedData.get("DOB"));
+                jsonObject.put("date", extractedData.get("date"));
+                jsonObject.put("data", extractedData);
+                jsonArray.add(jsonObject);
+            }
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return jsonArray;
     }
 
 }

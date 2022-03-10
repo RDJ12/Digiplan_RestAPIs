@@ -31,7 +31,7 @@ public class CaseController {
     }
 
     @PostMapping("/mycase")
-    public List<JSONArray> myCases(@RequestBody User userData) {
+    public JSONArray myCases(@RequestBody User userData) {
         return this.caseService.myCases(userData.getUsername());
     }
 

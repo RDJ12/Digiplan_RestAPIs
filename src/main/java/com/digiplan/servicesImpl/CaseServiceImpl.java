@@ -50,7 +50,7 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
-    public List<JSONArray> myCases(String username) {
+    public JSONArray myCases(String username) {
         log.info("@Start myCases");
         List<String> userList_username = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
