@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    public User findByUsernameAndPassword(String username, String password);
+    User findByUsernameAndPassword(String username, String password);
 
-    public User findByUsernameAndPhoneNumber(String username, Long phoneNumber);
+    User findByUsernameAndPhoneNumber(String username, Long phoneNumber);
 
     @Query(value = "select * from alignwise_users where groupid=(select groupid from alignwise_users where username=:username and typeofuser='DoctorAdmin')", nativeQuery = true)
-    public List<User> findAllUsersList(@Param("username") String username);
+    List<User> findAllUsersList(@Param("username") String username);
 }

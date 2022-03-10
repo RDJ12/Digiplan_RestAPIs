@@ -19,6 +19,4 @@ public interface UserService {
     String login(User userData);
 
     String forgetPassword(User userData);
-
-    List<User> getUsersList(String username);
 }

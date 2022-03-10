@@ -1,11 +1,8 @@
 package com.digiplan.servicesImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-//import org.json.simple.JSONObject;
 
-import com.digiplan.entities.Cases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -111,7 +108,6 @@ public class UserServiceImpl implements UserService {
             if (userData.getPassword().equals(userData.getConfirmNewPassword())) {
                 user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
                 if (user != null) {
-                    System.out.println(user.toString());
                     if (!user.getPassword().equals(userData.getPassword())) {
                         user.setPassword(userData.getPassword());
                         userRepository.saveAndFlush(user);
@@ -126,33 +122,6 @@ public class UserServiceImpl implements UserService {
             log.error("Exception = " + exception);
         }
         return status;
-    }
-
-    @Override
-    public List<User> getUsersList(String username) {
-        log.info("@Start getUsersList");
-        List<User> user = null;
-        List<String> name = new ArrayList<>();
-        List<String> caseName = new ArrayList<>();
-        try {
-            user = userRepository.findAllUsersList(username);
-            for(User u:user){
-                name.add(u.getUsername());
-            }
-            List<Cases> cases = null;
-
-            CaseServiceImpl caseServiceImpl = null;
-            cases = caseServiceImpl.getAllCases();
-
-            for(Cases c:cases){
-              //  caseName.add(new JSONObject());
-                caseName.add(c.getFormData());
-            }
-
-        } catch (Exception exception) {
-            log.error("Exception = " + exception);
-        }
-        return user;
     }
 
 }

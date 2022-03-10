@@ -1,7 +1,9 @@
 package com.digiplan.controllers;
 
 import com.digiplan.entities.Cases;
+import com.digiplan.entities.User;
 import com.digiplan.services.CaseService;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,11 @@ public class CaseController {
     @PostMapping("/savecase")
     public ResponseEntity<Cases> addCase(@RequestBody Cases casesData) {
         return new ResponseEntity<Cases>(this.caseService.addCase(casesData), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/mycase")
+    public List<JSONArray> myCases(@RequestBody User userData) {
+        return this.caseService.myCases(userData.getUsername());
     }
 
 }

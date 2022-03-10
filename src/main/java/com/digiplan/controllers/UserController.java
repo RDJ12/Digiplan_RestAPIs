@@ -1,6 +1,5 @@
 package com.digiplan.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -72,11 +71,6 @@ public class UserController {
             return new ResponseEntity<String>(status, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @PostMapping("/mycase")
-    public List<User> myCases(@RequestBody User userData) {
-        return this.userService.getUsersList(userData.getUsername());
     }
 
 }
