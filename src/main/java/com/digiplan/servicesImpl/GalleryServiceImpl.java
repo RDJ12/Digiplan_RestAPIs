@@ -86,7 +86,7 @@ public class GalleryServiceImpl implements GalleryService {
 
     @Override
     public JSONArray getSamples() {
-        log.info("@Start myCases");
+        log.info("@Start getSamples");
         JSONParser jsonParser = new JSONParser();
         JSONArray jsonArray = new JSONArray();
         try {
