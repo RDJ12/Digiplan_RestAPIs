@@ -10,8 +10,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +28,9 @@ public class CaseServiceImpl implements CaseService {
 
     @Autowired
     private CaseRepository caseRepository;
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private UserRepository userRepository;
@@ -82,6 +92,25 @@ public class CaseServiceImpl implements CaseService {
             log.error("Exception = " + exception);
         }
         return jsonArray;
+    }
+
+    @Override
+    public ResponseEntity<Object> downloadReport(String caseId) {
+        log.info("@Start downloadReport");
+        ResponseEntity<Object> responseEntity = null;
+        try {
+            String reportPath = env.getProperty("report.download.path") + caseId + "/Report.pdf";
+            File file = new File(reportPath);
+            InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
+            responseEntity = ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName() + "")
+                    .contentLength(file.length())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(inputStreamResource);
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return responseEntity;
     }
 
 }
