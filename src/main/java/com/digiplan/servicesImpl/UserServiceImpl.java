@@ -1,16 +1,16 @@
 package com.digiplan.servicesImpl;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.digiplan.entities.User;
 import com.digiplan.repositories.UserRepository;
 import com.digiplan.services.UserService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -122,6 +122,34 @@ public class UserServiceImpl implements UserService {
             log.error("Exception = " + exception);
         }
         return status;
+    }
+
+    //For Receipt Application For @Tarun
+    @Override
+    public JSONArray getAllProviders() {
+        log.info("@Start getAllProviders");
+        JSONArray jsonArray = new JSONArray();
+        try {
+            List<User> userList = userRepository.findAll();
+            for (User user : userList) {
+                if (user.getTtWattsProvider().equals("Yes") && (user.getLongitude() != "" || user.getLongitude() != null) && (user.getLatitude() != "" || user.getLatitude() != null)) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("doctorName", user.getFirstname() + " " + user.getLastname());
+                    jsonObject.put("phoneNumber", user.getPhoneNumber());
+                    jsonObject.put("email", user.getEmail());
+                    jsonObject.put("clinicName", user.getClinicName());
+                    jsonObject.put("address", user.getAddress());
+                    jsonObject.put("longitude", user.getLongitude());
+                    jsonObject.put("latitude", user.getLatitude());
+                    jsonObject.put("pin", user.getPin());
+                    jsonObject.put("city", user.getCity());
+                    jsonArray.add(jsonObject);
+                }
+            }
+        } catch (Exception exception) {
+            log.error("Exception = " + exception);
+        }
+        return jsonArray;
     }
 
 }

@@ -1,15 +1,15 @@
 package com.digiplan.controllers;
 
-import java.util.List;
-
+import com.digiplan.entities.User;
+import com.digiplan.services.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.digiplan.entities.User;
-import com.digiplan.services.UserService;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -71,6 +71,12 @@ public class UserController {
             return new ResponseEntity<String>(status, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    //For Receipt Application For @Tarun
+    @PostMapping(value = "/providers")
+    public JSONArray getAllProviders() {
+        return userService.getAllProviders();
     }
 
 }

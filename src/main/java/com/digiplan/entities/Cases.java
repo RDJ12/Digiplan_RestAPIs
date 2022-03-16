@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Data
@@ -21,7 +22,7 @@ public class Cases {
 
     @Id
     private String caseId;
-    private String submittedOn;
+    private String submittedOn = LocalDate.now().toString();
     private String treatmentLink;
     private String downloadLink;
     private String formData;

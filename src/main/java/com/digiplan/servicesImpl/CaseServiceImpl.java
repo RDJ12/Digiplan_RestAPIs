@@ -30,7 +30,7 @@ public class CaseServiceImpl implements CaseService {
     private CaseRepository caseRepository;
 
     @Autowired
-    private Environment env;
+    private Environment environment;
 
     @Autowired
     private UserRepository userRepository;
@@ -99,7 +99,7 @@ public class CaseServiceImpl implements CaseService {
         log.info("@Start downloadReport");
         ResponseEntity<Object> responseEntity = null;
         try {
-            String reportPath = env.getProperty("report.download.path") + caseId + "/Report.pdf";
+            String reportPath = environment.getProperty("report.download.path") + caseId + "/Report.pdf";
             File file = new File(reportPath);
             InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(file));
             responseEntity = ResponseEntity.ok()
