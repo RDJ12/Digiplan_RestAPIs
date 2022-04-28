@@ -1,34 +1,25 @@
 package com.digiplan.controllers;
 
-import java.util.List;
-
+import com.digiplan.entities.Comment;
+import com.digiplan.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.digiplan.entities.Comment;
-import com.digiplan.services.CommentService;
+import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/getComment/{id}")
-    public ResponseEntity<Comment> getComment(@PathVariable Integer id) {
-        Comment comment = this.commentService.getComment(id);
-        if (comment != null)
-            return new ResponseEntity<Comment>(comment, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PostMapping("/getComment")
+    public ResponseEntity<Map> getComment(@RequestParam String caseId) {
+        return this.commentService.getComment(caseId);
     }
 
     @GetMapping("/getAllComments")
@@ -36,9 +27,9 @@ public class CommentController {
         return this.commentService.getAllComments();
     }
 
-    @PostMapping("/addComment")
-    public ResponseEntity<Comment> addComment(@RequestBody Comment commentData) {
-        return new ResponseEntity<Comment>(this.commentService.addComment(commentData), HttpStatus.CREATED);
+    @PostMapping("/addComment/{commentType}")
+    public ResponseEntity<Map> addComment(@RequestBody Comment commentData, @PathVariable String commentType) {
+        return this.commentService.addComment(commentData, commentType);
     }
 
     @PutMapping("/updateComment/{id}")
@@ -57,6 +48,11 @@ public class CommentController {
             return new ResponseEntity<String>(status, HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/getCommentTypes")
+    public ResponseEntity<Map> getCommentTypes(@RequestParam String caseId, @RequestParam String typeOfUser) {
+        return commentService.getCommentTypes(caseId, typeOfUser);
     }
 
 }

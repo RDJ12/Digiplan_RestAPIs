@@ -9,18 +9,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Data
 @Entity
 @JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "FieldHandler"})
 @NoArgsConstructor
-@Table(name = "alignwise_citymaster")
-public class City {
+@Table(name = "logger")
+public class Logger {
 
     @Id
-    private String id;
-    @Column(name = "name")
-    private String cityName;
+    @Column(name = "correlation_id")
+    private String correlationId;
+    private String api;
+    @Column(name = "exception_message")
+    private String exceptionMessage;
+    @Column(name = "exception_description")
+    private String exceptionDescription;
+    @Column(name = "logged_date")
+    private LocalDateTime loggedDate;
 
 }

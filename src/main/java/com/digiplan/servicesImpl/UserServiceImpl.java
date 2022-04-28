@@ -1,133 +1,158 @@
 package com.digiplan.servicesImpl;
 
+import com.digiplan.entities.Logger;
 import com.digiplan.entities.User;
+import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.repositories.UserRepository;
 import com.digiplan.services.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UtilityService utilityService;
+
+    @Autowired
+    private LoggerRepository loggerRepository;
+
     @Override
     public User getUser(Integer id) {
-        log.info("@Start getUser");
         User user = null;
         try {
             Optional<User> check = userRepository.findById(id);
             if (check.isPresent())
                 user = userRepository.getById(id);
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@getUser Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getUser", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
         return user;
     }
 
     @Override
     public List<User> getAllUsers() {
-        log.info("@Start getAllUsers");
         List<User> usersList = null;
         try {
             usersList = userRepository.findAll();
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@getAllUsers Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getAllUsers", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
         return usersList;
     }
 
     @Override
     public User addUser(User userData) {
-        log.info("@Start addUser");
         User user = null;
         try {
             user = userRepository.saveAndFlush(userData);
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@addUser Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addUser", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
         return user;
     }
 
     @Override
     public User updateUser(Integer id, User userData) {
-        log.info("@Start updateUser");
         User user = null;
         try {
             Optional<User> check = userRepository.findById(id);
             if (check.isPresent())
                 user = userRepository.saveAndFlush(userData);
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@updateUser Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "updateUser", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
         return user;
     }
 
     @Override
     public String deleteUser(Integer id) {
-        log.info("@Start deleteUser");
         String status = "";
         try {
             userRepository.deleteById(id);
             status = "Deleted";
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@deleteUser Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "deleteUser", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
         return status;
     }
 
     @Override
-    public String login(User userData) {
-        log.info("@Start login");
+    public JSONObject login(User userData) {
         User user = null;
-        String isPresent = "";
+        JSONObject jsonObject = new JSONObject();
         try {
             user = userRepository.findByUsernameAndPassword(userData.getUsername(), userData.getPassword());
-            if (user != null)
-                isPresent = "Logged In";
+            if (user != null) {
+                jsonObject.put("status", 200);
+                jsonObject.put("message", "Logged In Successfully!");
+                jsonObject.put("response", user);
+            } else {
+                jsonObject.put("status", 404);
+                jsonObject.put("message", "Invalid Credentials!");
+                jsonObject.put("response", "");
+            }
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@login Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "login", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
-        return isPresent;
+        return jsonObject;
     }
 
     @Override
-    public String forgetPassword(User userData) {
-        log.info("@Start forgetPassword");
-        String status = "";
-        User user = null;
+    public JSONObject forgetPassword(User userData) {
+        JSONObject jsonObject = new JSONObject();
         try {
             if (userData.getPassword().equals(userData.getConfirmNewPassword())) {
-                user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
+                User user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
                 if (user != null) {
                     if (!user.getPassword().equals(userData.getPassword())) {
                         user.setPassword(userData.getPassword());
                         userRepository.saveAndFlush(user);
-                        status = "Reset Successful";
+                        jsonObject.put("status", 200);
+                        jsonObject.put("message", "Reset Successful");
                     }
-                    status = "Reset Successful";
+                    jsonObject.put("status", 200);
+                    jsonObject.put("message", "Reset Successful");
+                } else {
+                    jsonObject.put("status", 404);
+                    jsonObject.put("message", "Invalid Credentials!");
                 }
             } else {
-                status = "Password not matching";
+                jsonObject.put("status", 500);
+                jsonObject.put("message", "Password not matching!");
             }
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@forgetPassword Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "forgetPassword", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
-        return status;
+        return jsonObject;
     }
 
-    //For Receipt Application For @Tarun
+    //For Receipt Application For @Tarun Map Details
     @Override
     public JSONArray getAllProviders() {
-        log.info("@Start getAllProviders");
         JSONArray jsonArray = new JSONArray();
         try {
             List<User> userList = userRepository.findAll();
@@ -147,7 +172,9 @@ public class UserServiceImpl implements UserService {
                 }
             }
         } catch (Exception exception) {
-            log.error("Exception = " + exception);
+            System.out.println("@getAllProviders Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getAllProviders", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
         }
         return jsonArray;
     }

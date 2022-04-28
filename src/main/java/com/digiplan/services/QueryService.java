@@ -1,8 +1,9 @@
 package com.digiplan.services;
 
-import java.util.List;
-
 import com.digiplan.entities.Query;
+import org.json.simple.JSONObject;
+
+import java.util.List;
 
 public interface QueryService {
 
@@ -10,7 +11,7 @@ public interface QueryService {
 
     List<Query> getAllQueries();
 
-    Query addQuery(Query queryData);
+    JSONObject addQuery(Query queryData);
 
     Query updateQuery(String queryId, Query queryData);
 

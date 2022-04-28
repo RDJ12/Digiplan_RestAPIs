@@ -1,8 +1,11 @@
 package com.digiplan.services;
 
-import java.util.List;
-
 import com.digiplan.entities.Draft;
+import org.json.simple.JSONObject;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public interface DraftService {
 
@@ -14,7 +17,9 @@ public interface DraftService {
 
     Draft updateDraft(Integer id, Draft draftData);
 
-    String deleteDraft(Integer id);
+    //String deleteDraft(Integer id);
 
-    List<Draft> viewDrafts(Draft draftData);
+    JSONObject viewDrafts(Draft draftData);
+
+    ResponseEntity<Map> deleteDraft(String draftId);
 }

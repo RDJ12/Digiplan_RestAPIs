@@ -2,14 +2,15 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.Gallery;
 import com.digiplan.services.GalleryService;
-import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class GalaryController {
 
@@ -54,7 +55,7 @@ public class GalaryController {
     }
 
     @PostMapping("/samples")
-    public JSONArray getSamples() {
+    public ResponseEntity<Map> getSamples() {
         return this.galleryService.getSamples();
     }
 

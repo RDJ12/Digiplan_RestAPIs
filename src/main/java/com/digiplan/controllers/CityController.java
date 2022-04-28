@@ -1,21 +1,15 @@
 package com.digiplan.controllers;
 
-import java.util.List;
-
+import com.digiplan.entities.City;
+import com.digiplan.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.digiplan.entities.City;
-import com.digiplan.services.CityService;
+import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class CityController {
 
@@ -41,7 +35,7 @@ public class CityController {
         return new ResponseEntity<City>(this.cityService.addCity(cityData), HttpStatus.CREATED);
     }
 
-    @PutMapping("/updateCity/{cityName}")
+    @PutMapping("/ ")
     public ResponseEntity<City> updateCity(@PathVariable String cityName, @RequestBody City cityData) {
         City city = this.cityService.updateCity(cityName, cityData);
         if (city != null)

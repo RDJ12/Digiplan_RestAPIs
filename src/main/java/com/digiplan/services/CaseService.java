@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CaseService {
 
@@ -15,4 +16,6 @@ public interface CaseService {
     JSONArray myCases(String username);
 
     ResponseEntity<Object> downloadReport(String caseId);
+
+    ResponseEntity<Map> getCaseDetails(String caseId);
 }

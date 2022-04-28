@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class CaseController {
 
@@ -35,6 +37,11 @@ public class CaseController {
     @GetMapping("/users/{caseId}/Report.pdf")
     public ResponseEntity<Object> downloadReport(@PathVariable String caseId) {
         return this.caseService.downloadReport(caseId);
+    }
+
+    @PostMapping("/getCaseDetails")
+    public ResponseEntity<Map> getCaseDetails(@RequestParam String caseId) {
+        return this.caseService.getCaseDetails(caseId);
     }
 
 }

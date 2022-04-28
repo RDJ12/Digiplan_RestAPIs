@@ -1,18 +1,22 @@
 package com.digiplan.services;
 
-import java.util.List;
-
 import com.digiplan.entities.Comment;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public interface CommentService {
 
-    Comment getComment(Integer id);
+    ResponseEntity<Map> getComment(String caseId);
 
     List<Comment> getAllComments();
 
-    Comment addComment(Comment commentData);
+    ResponseEntity<Map> addComment(Comment commentData, String commentType);
 
     Comment updateComment(Integer id, Comment commentData);
 
     String deleteComment(Integer id);
+
+    ResponseEntity<Map> getCommentTypes(String caseId, String typeOfUser);
 }

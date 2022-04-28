@@ -1,9 +1,10 @@
 package com.digiplan.services;
 
 import com.digiplan.entities.Gallery;
-import org.json.simple.JSONArray;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GalleryService {
     Gallery getGalleryData(String caseId);
@@ -16,5 +17,5 @@ public interface GalleryService {
 
     String deleteGalleryData(String caseId);
 
-    JSONArray getSamples();
+    ResponseEntity<Map> getSamples();
 }
