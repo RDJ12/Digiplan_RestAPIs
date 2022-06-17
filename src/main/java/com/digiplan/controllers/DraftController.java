@@ -2,7 +2,6 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.Draft;
 import com.digiplan.services.DraftService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +55,7 @@ public class DraftController {
     } */
 
     @PostMapping("/viewdrafts")
-    public JSONObject viewDrafts(@RequestBody Draft draftData) {
+    public ResponseEntity<Map> viewDrafts(@RequestBody Draft draftData) {
         return this.draftService.viewDrafts(draftData);
     }
 

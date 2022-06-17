@@ -5,12 +5,15 @@ import com.digiplan.entities.Query;
 import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.repositories.QueryRepository;
 import com.digiplan.services.QueryService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -54,18 +57,24 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public JSONObject addQuery(Query queryData) {
-        JSONObject jsonObject = new JSONObject();
+    public ResponseEntity<Map> addQuery(Query queryData) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
         try {
             queryRepository.saveAndFlush(queryData);
-            jsonObject.put("status", 201);
-            jsonObject.put("message", "Contact form has been submitted!");
+            map.put("status", 201);
+            map.put("message", "Contact form has been submitted!");
+            status = HttpStatus.CREATED;
         } catch (Exception exception) {
             System.out.println("@addQuery Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addQuery", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return jsonObject;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override

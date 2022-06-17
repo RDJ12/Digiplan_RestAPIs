@@ -3,13 +3,13 @@ package com.digiplan.controllers;
 import com.digiplan.entities.User;
 import com.digiplan.services.UserService;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -56,10 +56,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public JSONObject login(@RequestBody User userData) {
+    public ResponseEntity<Map> login(@RequestBody User userData) {
         return this.userService.login(userData);
     }
 
+    @PostMapping("/forgetpassword")
+    public ResponseEntity<Map> forgetPassword(@RequestBody User userData) {
+        return this.userService.forgetPassword(userData);
+    }
 
     //For Receipt Application For @Tarun
     @PostMapping(value = "/providers")

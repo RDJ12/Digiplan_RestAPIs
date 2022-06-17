@@ -1,9 +1,10 @@
 package com.digiplan.services;
 
 import com.digiplan.entities.Query;
-import org.json.simple.JSONObject;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QueryService {
 
@@ -11,7 +12,7 @@ public interface QueryService {
 
     List<Query> getAllQueries();
 
-    JSONObject addQuery(Query queryData);
+    ResponseEntity<Map> addQuery(Query queryData);
 
     Query updateQuery(String queryId, Query queryData);
 

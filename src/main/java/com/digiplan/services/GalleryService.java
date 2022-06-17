@@ -18,4 +18,6 @@ public interface GalleryService {
     String deleteGalleryData(String caseId);
 
     ResponseEntity<Map> getSamples();
+
+    ResponseEntity<Map> getSampleFilterData(String caseType, String caseCategory, String gender);
 }

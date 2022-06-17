@@ -8,10 +8,14 @@ import com.digiplan.services.UserService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -97,31 +101,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JSONObject login(User userData) {
-        User user = null;
-        JSONObject jsonObject = new JSONObject();
+    public ResponseEntity<Map> login(User userData) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
         try {
-            user = userRepository.findByUsernameAndPassword(userData.getUsername(), userData.getPassword());
+            User user = userRepository.findByUsernameAndPassword(userData.getUsername(), userData.getPassword());
             if (user != null) {
-                jsonObject.put("status", 200);
-                jsonObject.put("message", "Logged In Successfully!");
-                jsonObject.put("response", user);
+                map.put("status", 200);
+                map.put("message", "Logged In Successfully!");
+                map.put("response", user);
+                status = HttpStatus.OK;
             } else {
-                jsonObject.put("status", 404);
-                jsonObject.put("message", "Invalid Credentials!");
-                jsonObject.put("response", "");
+                map.put("status", 404);
+                map.put("message", "Invalid Credentials!");
+                map.put("response", "");
+                status = HttpStatus.NOT_FOUND;
             }
         } catch (Exception exception) {
             System.out.println("@login Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "login", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return jsonObject;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override
-    public JSONObject forgetPassword(User userData) {
-        JSONObject jsonObject = new JSONObject();
+    public ResponseEntity<Map> forgetPassword(User userData) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
         try {
             if (userData.getPassword().equals(userData.getConfirmNewPassword())) {
                 User user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
@@ -129,25 +140,32 @@ public class UserServiceImpl implements UserService {
                     if (!user.getPassword().equals(userData.getPassword())) {
                         user.setPassword(userData.getPassword());
                         userRepository.saveAndFlush(user);
-                        jsonObject.put("status", 200);
-                        jsonObject.put("message", "Reset Successful");
+                        map.put("status", 200);
+                        map.put("message", "Reset Successful");
+                        status = HttpStatus.OK;
                     }
-                    jsonObject.put("status", 200);
-                    jsonObject.put("message", "Reset Successful");
+                    map.put("status", 200);
+                    map.put("message", "Reset Successful");
+                    status = HttpStatus.OK;
                 } else {
-                    jsonObject.put("status", 404);
-                    jsonObject.put("message", "Invalid Credentials!");
+                    map.put("status", 404);
+                    map.put("message", "Invalid Credentials!");
+                    status = HttpStatus.NOT_FOUND;
                 }
             } else {
-                jsonObject.put("status", 500);
-                jsonObject.put("message", "Password not matching!");
+                map.put("status", 500);
+                map.put("message", "Password not matching!");
             }
         } catch (Exception exception) {
             System.out.println("@forgetPassword Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "forgetPassword", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.NOT_FOUND;
         }
-        return jsonObject;
+        return new ResponseEntity<>(map, status);
     }
 
     //For Receipt Application For @Tarun Map Details
@@ -178,5 +196,6 @@ public class UserServiceImpl implements UserService {
         }
         return jsonArray;
     }
+
 
 }

@@ -5,7 +5,6 @@ import com.digiplan.entities.Logger;
 import com.digiplan.repositories.DraftRepository;
 import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.services.DraftService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -96,8 +95,9 @@ public class DraftServiceImpl implements DraftService {
     } */
 
     @Override
-    public JSONObject viewDrafts(Draft draftData) {
-        JSONObject jsonObject = new JSONObject();
+    public ResponseEntity<Map> viewDrafts(Draft draftData) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
         try {
             List<Draft> drafts = new ArrayList<>();
             List<Draft> draftList = draftRepository.findAll();
@@ -107,20 +107,26 @@ public class DraftServiceImpl implements DraftService {
                 }
             }
             if (drafts.isEmpty()) {
-                jsonObject.put("status", 404);
-                jsonObject.put("message", "No Record Found!");
-                jsonObject.put("response", "");
+                map.put("status", 404);
+                map.put("message", "No Record Found!");
+                map.put("response", "");
+                status = HttpStatus.NOT_FOUND;
             } else {
-                jsonObject.put("status", 200);
-                jsonObject.put("message", "Record Found!");
-                jsonObject.put("response", drafts);
+                map.put("status", 200);
+                map.put("message", "Record Found!");
+                map.put("response", drafts);
+                status = HttpStatus.OK;
             }
         } catch (Exception exception) {
             System.out.println("@viewDrafts Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "viewDrafts", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return jsonObject;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override

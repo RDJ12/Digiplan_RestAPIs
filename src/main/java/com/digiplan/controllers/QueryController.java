@@ -2,13 +2,13 @@ package com.digiplan.controllers;
 
 import com.digiplan.entities.Query;
 import com.digiplan.services.QueryService;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -32,7 +32,7 @@ public class QueryController {
     }
 
     @PostMapping("/contactus")
-    public JSONObject addQuery(@RequestBody Query queryData) {
+    public ResponseEntity<Map> addQuery(@RequestBody Query queryData) {
         return this.queryService.addQuery(queryData);
     }
 

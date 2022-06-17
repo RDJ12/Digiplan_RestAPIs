@@ -2,9 +2,10 @@ package com.digiplan.services;
 
 import com.digiplan.entities.User;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -18,9 +19,9 @@ public interface UserService {
 
     String deleteUser(Integer id);
 
-    JSONObject login(User userData);
+    ResponseEntity<Map> login(User userData);
 
-    JSONObject forgetPassword(User userData);
+    ResponseEntity<Map> forgetPassword(User userData);
 
     //For Receipt Application For @Tarun
     JSONArray getAllProviders();
