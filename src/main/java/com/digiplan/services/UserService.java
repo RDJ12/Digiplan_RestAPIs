@@ -21,8 +21,15 @@ public interface UserService {
 
     ResponseEntity<Map> login(User userData);
 
-    ResponseEntity<Map> forgetPassword(User userData);
+    ResponseEntity<Map> sendOTP(User userData);
+
+    ResponseEntity<Map> forgotPassword(String username, String password, Integer otp);
+
+    ResponseEntity<Map> changePassword(User userData);
 
     //For Receipt Application For @Tarun
     JSONArray getAllProviders();
+
+    ResponseEntity<Map> getDoctorsList();
+
 }

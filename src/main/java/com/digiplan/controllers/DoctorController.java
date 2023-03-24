@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,17 +18,30 @@ public class DoctorController {
     private DoctorService doctorService;
 
     @GetMapping("/getDoctor/{caseId}")
-    public ResponseEntity<Doctor> getDoctor(@PathVariable String caseId) {
-        Doctor doctor = this.doctorService.getDoctor(caseId);
-        if (doctor != null)
-            return new ResponseEntity<Doctor>(doctor, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Map<String, Object> getDoctor(@PathVariable String caseId) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            if (this.doctorService.getDoctor(caseId) != null) {
+                map.put("HttpStatus", "200");
+                map.put("results", this.doctorService.getDoctor(caseId));
+                map.put("message", "Success");
+            } else {
+                map.put("HttpStatus", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found or Case Id is Invalid!");
+            }
+        } catch (Exception e) {
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message", e.getMessage());
+        }
+        return map;
+
     }
 
-    @GetMapping("/getAllDoctors")
-    public List<Doctor> getAllDoctors() {
-        return this.doctorService.getAllDoctors();
+    @PostMapping("/getAllDoctors")
+    public ResponseEntity<Map> getAllDoctors(@RequestParam String searchDoctor) {
+        return this.doctorService.getAllDoctors(searchDoctor);
     }
 
     @PostMapping("/addDoctor")

@@ -1,17 +1,11 @@
 package com.digiplan.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @AllArgsConstructor
 @Data
@@ -42,6 +36,8 @@ public class Image {
     private String opg;
     private String lateralCeph;
     private String other;
+    private String pdf1;
+    private String pdf2;
     @Column(name = "case_id")
     private String caseId;
 

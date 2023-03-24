@@ -106,8 +106,13 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = null;
         try {
             Optional<Comment> check = commentRepository.findById(id);
-            if (check.isPresent())
+            System.out.println("Reached here1");
+            if (check.isPresent()) {
+                System.out.println("Reached here");
+                commentData.setId(id);
                 comment = commentRepository.saveAndFlush(commentData);
+                System.out.println("Reached here2");
+            }
         } catch (Exception exception) {
             System.out.println("@updateComment Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "updateComment", exception.getMessage(), exception.toString(), LocalDateTime.now());

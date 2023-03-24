@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
@@ -18,17 +18,45 @@ public class QueryController {
     private QueryService queryService;
 
     @GetMapping("/getQuery/{queryId}")
-    public ResponseEntity<Query> getQuery(@PathVariable String queryId) {
-        Query query = this.queryService.getQuery(queryId);
-        if (query != null)
-            return new ResponseEntity<Query>(query, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Map<String,Object> getQuery(@PathVariable String queryId) {
+        Map<String,Object> map=new HashMap<>();
+        try {
+            if (this.queryService.getQuery(queryId) != null) {
+                map.put("status_code", "200");
+                map.put("results", this.queryService.getQuery(queryId));
+                map.put("message", "Success");
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found or Draft Id is Invalid! ");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
     }
 
     @GetMapping("/getAllQueries")
-    public List<Query> getAllQueries() {
-        return this.queryService.getAllQueries();
+    public Map<String,Object> getAllQueries() {
+        Map<String,Object> map=new HashMap<>();
+        try {
+            if (this.queryService.getAllQueries() != null) {
+                map.put("status_code", "200");
+                map.put("results", this.queryService.getAllQueries());
+                map.put("message", "Success");
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found ! ");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
     }
 
     @PostMapping("/contactus")

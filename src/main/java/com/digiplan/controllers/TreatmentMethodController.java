@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -26,9 +27,29 @@ public class TreatmentMethodController {
     }
 
     @GetMapping("/getAllTreatmentMethodData")
-    public List<TreatmentMethod> getAllTreatmentMethodData() {
-        return this.treatmentMethodService.getAllTreatmentMethodData();
+    public Map<String,Object> getAllTreatmentMethodData() {
+        Map<String,Object> map=new HashMap<>();
+
+        try {
+            if (this.treatmentMethodService.getAllTreatmentMethodData().size() > 0) {
+                map.put("status_code", "200");
+                map.put("results", this.treatmentMethodService.getAllTreatmentMethodData());
+                map.put("message", "Success");
+
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found!");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
     }
+
+
 
     @PostMapping("/addTreatmentMethodData")
     public ResponseEntity<TreatmentMethod> addTreatmentMethodData(@RequestBody TreatmentMethod treatmentMethodData) {

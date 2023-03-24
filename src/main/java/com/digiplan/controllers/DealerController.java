@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,18 +18,56 @@ public class DealerController {
     private DealerService dealerService;
 
     @GetMapping("/getDealer/{id}")
-    public ResponseEntity<Dealer> getDealer(@PathVariable Integer id) {
-        Dealer dealer = this.dealerService.getDealer(id);
-        if (dealer != null)
-            return new ResponseEntity<Dealer>(dealer, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Map<String,Object> getDealer(@PathVariable Integer id) {
+        Map<String,Object> map= new HashMap<>();
+
+        try {
+            if (this.dealerService.getDealer(id) != null) {
+                map.put("status_code", "200");
+                map.put("results", this.dealerService.getDealer(id));
+                map.put("message", "Success");
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found or ID Invalid!");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
     }
 
+
+
     @GetMapping("/getAllDealers")
-    public List<Dealer> getAllDealers() {
-        return this.dealerService.getAllDealers();
+    public Map<String, Object> getAllDealers() {
+
+        Map<String, Object> map=new HashMap<>();
+
+        try {
+            if (this.dealerService.getAllDealers().size() > 0) {
+                map.put("status_code", "200");
+                map.put("results", this.dealerService.getAllDealers());
+                map.put("message", "Success");
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found!");
+            }
+        }
+        catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
     }
+
+
+
+
 
     @PostMapping("/addDealer")
     public ResponseEntity<Dealer> addDraft(@RequestBody Dealer dealerData) {

@@ -1,14 +1,15 @@
 package com.digiplan.services;
 
-import java.util.List;
-
 import com.digiplan.entities.Doctor;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 public interface DoctorService {
 
 	public Doctor getDoctor(String caseId);
 
-	public List<Doctor> getAllDoctors();
+	public ResponseEntity<Map> getAllDoctors(String searchDoctor);
 
 	public Doctor addDoctor(Doctor doctorData);
 

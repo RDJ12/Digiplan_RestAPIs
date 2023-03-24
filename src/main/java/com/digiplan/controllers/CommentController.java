@@ -34,6 +34,7 @@ public class CommentController {
 
     @PutMapping("/updateComment/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable Integer id, @RequestBody Comment commentData) {
+        commentData.setId(id);
         Comment comment = this.commentService.updateComment(id, commentData);
         if (comment != null)
             return new ResponseEntity<Comment>(comment, HttpStatus.OK);

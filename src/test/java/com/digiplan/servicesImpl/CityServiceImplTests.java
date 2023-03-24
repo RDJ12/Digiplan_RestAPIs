@@ -1,16 +1,21 @@
 package com.digiplan.servicesImpl;
 
-import com.digiplan.entities.City;
-import com.digiplan.repositories.CityRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import com.digiplan.entities.City;
+import com.digiplan.repositories.CityRepository;
 
 @SpringBootTest
 public class CityServiceImplTests {
@@ -21,7 +26,7 @@ public class CityServiceImplTests {
     @Mock
     private CityRepository cityRepository;
 
- /*   @Test
+    @Test
     public void test_getCity() {
         City city = new City("1", "Bhopal");
         Optional<City> retrievedData = Optional.of(new City("2", "Bhopal"));
@@ -30,9 +35,9 @@ public class CityServiceImplTests {
         if (retrievedData.isPresent())
             when(cityRepository.getById(cityName)).thenReturn(city);
         assertEquals(cityName, cityServiceImpl.getCity(cityName).getCityName());
-    }*/
+    }
 
-   /* @Test
+    @Test
     public void test_getAllCities() {
         List<City> city = new ArrayList<>();
         city.add(new City("1", "Bhopal"));
@@ -40,7 +45,7 @@ public class CityServiceImplTests {
         city.add(new City("3", "Surat"));
         when(cityRepository.findAll()).thenReturn(city);
         assertEquals(3, cityServiceImpl.getAllCities().size());
-    }*/
+    }
 
     @Test
     public void test_addCity() {

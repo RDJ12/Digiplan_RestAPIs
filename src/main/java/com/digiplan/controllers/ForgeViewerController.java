@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,17 +18,46 @@ public class ForgeViewerController {
     private ForgeViewerService forgeViewerService;
 
     @GetMapping("/getForgeViewer/{id}")
-    public ResponseEntity<ForgeViewer> getForgeViewer(@PathVariable Integer id) {
-        ForgeViewer forgeViewer = this.forgeViewerService.getForgeViewer(id);
-        if (forgeViewer != null)
-            return new ResponseEntity<ForgeViewer>(forgeViewer, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Map<String,Object> getForgeViewer(@PathVariable Integer id) {
+        Map<String,Object> map =new HashMap<>();
+        try {
+            if (this.forgeViewerService.getForgeViewer(id) != null) {
+                map.put("status_code", "200");
+                map.put("results", this.forgeViewerService.getForgeViewer(id));
+                map.put("message", "Success");
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found or Id is Invalid!");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
     }
 
     @GetMapping("/getAllForgeViewers")
-    public List<ForgeViewer> getAllForgeViewers() {
-        return this.forgeViewerService.getAllForgeViewers();
+    public Map<String,Object> getAllForgeViewers() {
+        Map<String,Object> map =new HashMap<>();
+        try {
+            if (this.forgeViewerService.getAllForgeViewers()!= null) {
+                map.put("status_code", "200");
+                map.put("results", this.forgeViewerService.getAllForgeViewers());
+                map.put("message", "Success");
+            } else {
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message", "Records Not Found!");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+        return map;
+        //return this.forgeViewerService.getAllForgeViewers();
     }
 
     @PostMapping("/addForgeViewer")

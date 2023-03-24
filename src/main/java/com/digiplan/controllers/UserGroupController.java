@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,17 +18,48 @@ public class UserGroupController {
     private UserGroupService userGroupService;
 
     @GetMapping("/getUserGroup/{groupId}")
-    public ResponseEntity<UserGroup> getUserGroup(@PathVariable String groupId) {
-        UserGroup userGroup = this.userGroupService.getUserGroup(groupId);
-        if (userGroup != null)
-            return new ResponseEntity<UserGroup>(userGroup, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Map<String,Object> getUserGroup(@PathVariable String groupId) {
+        Map<String, Object> map=new HashMap<>();
+        try{
+
+            if(this.userGroupService.getUserGroup(groupId)!=null){
+                map.put("status_code", "200");
+                map.put("results", this.userGroupService.getUserGroup(groupId));
+                map.put("message","Success");
+            }
+            else{
+                map.put("status_code", "204");
+                map.put("results", "No Content!");
+                map.put("message","Records Not Found or Group Id is Invalid! ");
+            }
+        }catch (Exception e){
+            map.put("status_code", "500");
+            map.put("results", "Internal Server Error!");
+            map.put("message" ,e.getMessage());
+        }
+            return  map;
+
     }
 
     @GetMapping("/getAllUserGroups")
-    public List<UserGroup> getAllUserGroups() {
-        return this.userGroupService.getAllUserGroups();
+    public Map<String,Object> getAllUserGroups() {
+       Map<String,Object> map =new HashMap<>();
+       try {
+           if (this.userGroupService.getAllUserGroups() != null) {
+               map.put("status_code", "200");
+               map.put("results", this.userGroupService.getAllUserGroups());
+               map.put("message", "Success");
+           } else {
+               map.put("status_code", "204");
+               map.put("results", "No Content!");
+               map.put("message", "Records Not Found!");
+           }
+       }catch (Exception e){
+           map.put("status_code", "500");
+           map.put("results", "Internal Server Error!");
+           map.put("message" ,e.getMessage());
+       }
+       return map;
     }
 
     @PostMapping("/addUserGroup")

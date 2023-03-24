@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -17,23 +17,18 @@ public class IncompleteFormController {
     private IncompleteFormService incompleteFormService;
 
     @GetMapping("/getIncompleteForm/{id}")
-    public ResponseEntity<IncompleteForm> getIncompleteForm(@PathVariable Integer id) {
-        IncompleteForm incompleteForm = this.incompleteFormService.getIncompleteForm(id);
-        if (incompleteForm != null)
-            return new ResponseEntity<IncompleteForm>(incompleteForm, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map> getIncompleteForm(@PathVariable Integer id) {
+        return this.incompleteFormService.getIncompleteForm(id);
     }
 
     @GetMapping("/getAllIncompleteForms")
-    public List<IncompleteForm> getAllIncompleteForms() {
+    public ResponseEntity<Map> getAllIncompleteForms() {
         return this.incompleteFormService.getAllIncompleteForms();
     }
 
     @PostMapping("/addIncompleteForm")
-    public ResponseEntity<IncompleteForm> addIncompleteForm(@RequestBody IncompleteForm incompleteFormData) {
-        return new ResponseEntity<IncompleteForm>(this.incompleteFormService.addIncompleteForm(incompleteFormData),
-                HttpStatus.CREATED);
+    public ResponseEntity<Map> addIncompleteForm(@RequestBody IncompleteForm incompleteFormData) {
+        return this.incompleteFormService.addIncompleteForm(incompleteFormData);
     }
 
     @PutMapping("/updateIncompleteForm/{id}")

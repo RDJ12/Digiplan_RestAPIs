@@ -16,7 +16,7 @@ public interface DraftService {
 
     Draft updateDraft(Integer id, Draft draftData);
 
-    //String deleteDraft(Integer id);
+   // String deleteDraft(Integer id);
 
     ResponseEntity<Map> viewDrafts(Draft draftData);
 

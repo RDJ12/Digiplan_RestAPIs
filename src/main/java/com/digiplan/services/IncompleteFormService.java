@@ -1,16 +1,17 @@
 package com.digiplan.services;
 
-import java.util.List;
-
 import com.digiplan.entities.IncompleteForm;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Map;
 
 public interface IncompleteFormService {
 
-    IncompleteForm getIncompleteForm(Integer id);
+    ResponseEntity<Map> getIncompleteForm(Integer id);
 
-    List<IncompleteForm> getAllIncompleteForms();
+    ResponseEntity<Map> getAllIncompleteForms();
 
-    IncompleteForm addIncompleteForm(IncompleteForm incompleteFormData);
+    ResponseEntity<Map> addIncompleteForm(IncompleteForm incompleteFormData);
 
     IncompleteForm updateIncompleteForm(Integer id, IncompleteForm incompleteFormData);
 

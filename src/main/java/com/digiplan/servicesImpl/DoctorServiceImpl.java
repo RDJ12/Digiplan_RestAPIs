@@ -2,21 +2,26 @@ package com.digiplan.servicesImpl;
 
 import com.digiplan.entities.Doctor;
 import com.digiplan.entities.Logger;
+import com.digiplan.entities.User;
 import com.digiplan.repositories.DoctorRepository;
 import com.digiplan.repositories.LoggerRepository;
+import com.digiplan.repositories.UserRepository;
 import com.digiplan.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UtilityService utilityService;
@@ -40,16 +45,37 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<Doctor> getAllDoctors() {
-        List<Doctor> doctorsList = null;
+    public ResponseEntity<Map> getAllDoctors(String searchDoctor) {
+        Map map = new HashMap();
+        HttpStatus status = null;
         try {
-            doctorsList = doctorRepository.findAll();
+            List<User> userList = new ArrayList<>();
+            if (searchDoctor.equals("") || searchDoctor.equals(null))
+                userList = userRepository.getDoctorsListByLimit();
+            else
+                userList = userRepository.getDoctorsListByDoctorname(searchDoctor);
+
+            if (userList != null) {
+                map.put("status", 200);
+                map.put("messgae", "OK");
+                map.put("data", userList);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("messgae", "No Data Present");
+                map.put("data", "");
+                status = HttpStatus.NOT_FOUND;
+            }
         } catch (Exception exception) {
             System.out.println("@getAllDoctors Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getAllDoctors", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("messgae", "Internel Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return doctorsList;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.digiplan.services;
 
-import java.util.List;
-
 import com.digiplan.entities.City;
+
+import java.util.List;
 
 public interface CityService {
 

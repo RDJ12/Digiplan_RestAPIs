@@ -59,7 +59,7 @@ public class GalaryController {
         return this.galleryService.getSamples();
     }
 
-    @GetMapping("/sampleFilterData")
+    @PostMapping("/sampleFilterData")
     public ResponseEntity<Map> getSampleFilterData(@RequestParam String caseType, @RequestParam String caseCategory, @RequestParam String gender) {
         return this.galleryService.getSampleFilterData(caseType, caseCategory, gender);
     }

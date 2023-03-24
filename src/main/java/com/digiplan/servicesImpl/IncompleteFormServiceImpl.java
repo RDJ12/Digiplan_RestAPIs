@@ -6,10 +6,14 @@ import com.digiplan.repositories.IncompleteFormRepository;
 import com.digiplan.repositories.LoggerRepository;
 import com.digiplan.services.IncompleteFormService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -25,44 +29,84 @@ public class IncompleteFormServiceImpl implements IncompleteFormService {
     private LoggerRepository loggerRepository;
 
     @Override
-    public IncompleteForm getIncompleteForm(Integer id) {
-        IncompleteForm incompleteForm = null;
+    public ResponseEntity<Map> getIncompleteForm(Integer id) {
+        Map map = new HashMap();
+        HttpStatus status = null;
         try {
             Optional<IncompleteForm> check = incompleteFormRepository.findById(id);
-            if (check.isPresent())
-                incompleteForm = incompleteFormRepository.getById(id);
+            if (check.isPresent()) {
+                IncompleteForm incompleteForm = incompleteFormRepository.getById(id);
+                map.put("status", 200);
+                map.put("message", "Record Found!");
+                map.put("data", incompleteForm);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("message", "Record Found!");
+                map.put("data", "");
+                status = HttpStatus.NOT_FOUND;
+            }
         } catch (Exception exception) {
             System.out.println("@getIncompleteForm Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getIncompleteForm", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return incompleteForm;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override
-    public List<IncompleteForm> getAllIncompleteForms() {
-        List<IncompleteForm> incompleteFormsList = null;
+    public ResponseEntity<Map> getAllIncompleteForms() {
+        Map map = new HashMap();
+        HttpStatus status = null;
         try {
-            incompleteFormsList = incompleteFormRepository.findAll();
+            List<IncompleteForm> incompleteFormsList = incompleteFormRepository.findAll();
+            if (incompleteFormsList.isEmpty()) {
+                map.put("status", 404);
+                map.put("message", "Record Found!");
+                map.put("data", "");
+                status = HttpStatus.NOT_FOUND;
+            } else {
+                map.put("status", 200);
+                map.put("message", "Record Found!");
+                map.put("data", incompleteFormsList);
+                status = HttpStatus.OK;
+            }
         } catch (Exception exception) {
             System.out.println("@getAllIncompleteForms Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getAllIncompleteForms", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return incompleteFormsList;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override
-    public IncompleteForm addIncompleteForm(IncompleteForm incompleteFormData) {
-        IncompleteForm incompleteForm = null;
+    public ResponseEntity<Map> addIncompleteForm(IncompleteForm incompleteFormData) {
+        Map map = new HashMap();
+        HttpStatus status = null;
         try {
-            incompleteForm = incompleteFormRepository.saveAndFlush(incompleteFormData);
+            IncompleteForm incompleteForm = incompleteFormRepository.saveAndFlush(incompleteFormData);
+            map.put("status", 200);
+            map.put("message", "Data Saved!");
+            map.put("data", incompleteForm);
+            status = HttpStatus.OK;
         } catch (Exception exception) {
             System.out.println("@addIncompleteForm Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "addIncompleteForm", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return incompleteForm;
+        return new ResponseEntity<>(map, status);
     }
 
     @Override

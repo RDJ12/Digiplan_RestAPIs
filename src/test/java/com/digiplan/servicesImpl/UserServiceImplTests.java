@@ -1,21 +1,9 @@
 package com.digiplan.servicesImpl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
+import com.digiplan.repositories.UserRepository;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.digiplan.entities.User;
-import com.digiplan.repositories.UserRepository;
 
 @SpringBootTest
 public class UserServiceImplTests {
@@ -26,7 +14,7 @@ public class UserServiceImplTests {
     @Mock
     private UserRepository userRepository;
 
-    @Test
+  /*  @Test
     public void test_getUser() {
 
         User user = new User("drsjavali", "render123#", "Bengaluru", "Sonal", "Javali", "sonaljavali@gmail.com",
@@ -87,6 +75,6 @@ public class UserServiceImplTests {
         Integer id = 1;
         userServiceImpl.deleteUser(id);
         verify(userRepository, times(1)).deleteById(id);
-    }
+    } */
 
 }

@@ -1,12 +1,11 @@
 package com.digiplan.entities;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @AllArgsConstructor
 @Data
@@ -41,6 +40,8 @@ public class User {
     @Column(name = "user_id")
     private Integer id;
     @Transient
-    private String confirmNewPassword;
+    private String newPassword;
+    @Transient
+    private String confirmPassword;
 
 }

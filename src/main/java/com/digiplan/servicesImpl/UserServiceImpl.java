@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private LoggerRepository loggerRepository;
 
+    int otp = 12345;
+
     @Override
     public User getUser(Integer id) {
         User user = null;
@@ -106,7 +108,7 @@ public class UserServiceImpl implements UserService {
         HttpStatus status = null;
         try {
             User user = userRepository.findByUsernameAndPassword(userData.getUsername(), userData.getPassword());
-            if (user != null) {
+            if (user != null && user.getPassword().equals(userData.getPassword())) {
                 map.put("status", 200);
                 map.put("message", "Logged In Successfully!");
                 map.put("response", user);
@@ -130,35 +132,98 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Map> forgetPassword(User userData) {
+    public ResponseEntity<Map> sendOTP(User userData) {
         Map<String, Object> map = new HashMap();
         HttpStatus status = null;
         try {
-            if (userData.getPassword().equals(userData.getConfirmNewPassword())) {
-                User user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
+            User user = userRepository.findByUsernameAndPhoneNumber(userData.getUsername(), userData.getPhoneNumber());
+            if (user != null) {
+                map.put("status", 200);
+                map.put("message", "OTP sent successfully");
+                map.put("otp", otp);
+                status = HttpStatus.OK;
+            } else {
+                map.put("status", 404);
+                map.put("message", "Invalid User");
+                status = HttpStatus.NOT_FOUND;
+            }
+        } catch (Exception exception) {
+            System.out.println("@forgetPassword Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "forgetPassword", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map> forgotPassword(String username, String password, Integer otp) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
+        try {
+            if (this.otp == otp) {
+                User user = userRepository.findByUsername(username);
                 if (user != null) {
-                    if (!user.getPassword().equals(userData.getPassword())) {
-                        user.setPassword(userData.getPassword());
+                    if (!user.getPassword().equals(password)) {
+                        user.setPassword(password);
                         userRepository.saveAndFlush(user);
-                        map.put("status", 200);
-                        map.put("message", "Reset Successful");
-                        status = HttpStatus.OK;
                     }
                     map.put("status", 200);
                     map.put("message", "Reset Successful");
                     status = HttpStatus.OK;
                 } else {
                     map.put("status", 404);
-                    map.put("message", "Invalid Credentials!");
+                    map.put("message", "Invalid User");
                     status = HttpStatus.NOT_FOUND;
                 }
             } else {
                 map.put("status", 500);
-                map.put("message", "Password not matching!");
+                map.put("message", "Invalid OTP");
+                status = HttpStatus.INTERNAL_SERVER_ERROR;
             }
         } catch (Exception exception) {
             System.out.println("@forgetPassword Exception : " + exception);
             Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "forgetPassword", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.NOT_FOUND;
+        }
+        return new ResponseEntity<>(map, status);
+    }
+
+    @Override
+    public ResponseEntity<Map> changePassword(User userData) {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
+        try {
+            if (userData.getConfirmPassword().equals(userData.getNewPassword())) {
+                User user = userRepository.findByUsernameAndPassword(userData.getUsername(), userData.getPassword());
+                if (user != null) {
+                    if (!user.getPassword().equals(userData.getNewPassword())) {
+                        user.setPassword(userData.getNewPassword());
+                        userRepository.saveAndFlush(user);
+                    }
+                    map.put("status", 200);
+                    map.put("message", "Reset Successful");
+                    status = HttpStatus.OK;
+                } else {
+                    map.put("status", 401);
+                    map.put("message", "Old password is not valid");
+                    status = HttpStatus.UNAUTHORIZED;
+                }
+            } else {
+                map.put("status", 500);
+                map.put("message", "The password confirmation does not match");
+                status = HttpStatus.INTERNAL_SERVER_ERROR;
+            }
+        } catch (Exception exception) {
+            System.out.println("@changePassword Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "changePassword", exception.getMessage(), exception.toString(), LocalDateTime.now());
             loggerRepository.saveAndFlush(logger);
             map.put("status", 500);
             map.put("message", "Internal Server Error");
@@ -197,5 +262,32 @@ public class UserServiceImpl implements UserService {
         return jsonArray;
     }
 
+    @Override
+    public ResponseEntity<Map> getDoctorsList() {
+        Map<String, Object> map = new HashMap();
+        HttpStatus status = null;
+        try {
+            List<User> userList = userRepository.getDoctorsList();
+            if (!userList.isEmpty()) {
+                status = HttpStatus.OK;
+                map.put("status", 200);
+                map.put("message", "OK");
+                map.put("data", userList);
+            } else {
+                status = HttpStatus.NOT_FOUND;
+                map.put("status", 404);
+                map.put("message", "No Data Found");
+            }
+        } catch (Exception exception) {
+            System.out.println("@getDoctorsList Exception : " + exception);
+            Logger logger = new Logger(utilityService.getLoggerCorrelationId(), "getDoctorsList", exception.getMessage(), exception.toString(), LocalDateTime.now());
+            loggerRepository.saveAndFlush(logger);
+            map.put("status", 500);
+            map.put("message", "Internal Server Error");
+            map.put("error", exception.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>(map, status);
+    }
 
 }
